@@ -1,0 +1,127 @@
+"use client"
+
+import * as React from "react"
+import Link from "next/link"
+
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
+
+
+const MenuList = () => {
+  return (
+    <NavigationMenu viewport={false}>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Productos</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+              {components.map((component) => (
+                <ListItem
+                  key={component.title}
+                  title={component.title}
+                  href={component.href}
+                >
+                  {component.description}
+                </ListItem>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Sobre Nosotros</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              <li className="row-span-3">
+                <NavigationMenuLink asChild>
+                  <Link
+                    className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
+                    href="/"
+                  >
+                    <div className="mt-4 mb-2 text-lg font-medium">
+                      Bronco&apos;s Market
+                    </div>
+                    <p className="text-muted-foreground text-sm leading-tight">
+                      Nos dedicamos a ofrecerte productos de alta calidad a precios accesibles, con la comodidad que tu familia merece. Somos tu aliado en el día a día, brindando desde combos completos hasta los ingredientes más frescos para tu hogar.
+                    </p>
+                  </Link>
+                </NavigationMenuLink>
+              </li>
+              <ListItem href="/shop" title="Tienda">
+                Accede a toda tu información, tus pedidos y mucho más.
+              </ListItem>
+              <ListItem href="/offers" title="Ofertas">
+                Sección dedicada a promociones y descuentos especiales.
+              </ListItem>
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  )
+}
+
+export default MenuList;
+
+const components: { title: string; href: string; description: string }[] = [
+  {
+    title: "Combos",
+    href: "/category/combos",
+    description:
+      "Paquetes completos y económicos, diseñados para satisfacer todas tus necesidades en una sola compra. Ideales para familias, eventos o ahorrar tiempo y dinero.",
+  },
+  {
+    title: "Lácteos",
+    href: "/category/dairy",
+    description:
+      "Productos frescos y esenciales como quesos, leche, mantequilla y más. Nutrición y sabor en cada opción, perfectos para tu dieta diaria.",
+  },
+  {
+    title: "Cárnicos",
+    href: "/category/meats",
+    description:
+      "Cortes selectos de carne de cerdo, pollo, res y embutidos de alta calidad. Frescura garantizada para tus comidas favoritas.",
+  },
+  {
+    title: "Bebidas",
+    href: "/category/drinks",
+    description: "Refrescos, jugos, café y otras bebidas para hidratarte y disfrutar en cualquier momento. ¡Frías o calientes, siempre deliciosas!",
+  },
+  {
+    title: "Confituras",
+    href: "/category/jams",
+    description:
+      "Dulces, azúcar, leche condensada y otros productos para endulzar tu día. Postres, meriendas y antojos cubiertos con calidad.",
+  },
+  {
+    title: "Otros",
+    href: "/category/others",
+    description:
+      "Aceites, pastas, condimentos y artículos variados para complementar tu despensa. Todo lo que necesitas en un solo lugar.",
+  },
+]
+
+function ListItem({
+  title,
+  children,
+  href,
+  ...props
+}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+  return (
+    <li {...props}>
+      <NavigationMenuLink asChild>
+        <Link href={href}>
+          <div className="text-sm leading-none font-medium">{title}</div>
+          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+            {children}
+          </p>
+        </Link>
+      </NavigationMenuLink>
+    </li>
+  )
+}
