@@ -2,16 +2,19 @@
 "use client"
 
 import { useGetFeaturedProducts } from "@/api/useGetFeaturedProducts";
-import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
 import SkeletonSchema from "./skeleton-schema";
 import { ProductType } from "@/types/product";
 import { Card, CardContent } from "./ui/card";
 import { ResponseType } from "@/types/response";
 import { Expand, ShoppingCart } from "lucide-react";
+import IconButton from "./icon-button";
+import { useRouter } from "next/navigation";
 
 const FeaturedProducts = () => {
   
   const { loading,result }: ResponseType = useGetFeaturedProducts()
+  const router = useRouter()
 
   return ( 
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
@@ -32,11 +35,24 @@ const FeaturedProducts = () => {
                         <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${product.images[0].url}`} alt="Image featured"/>
                         <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100 bottom-5">
                           <div className="flex justify-center gap-x-6">
-                            <Expand/>
-                            <ShoppingCart/>
+                            <IconButton 
+                            onClick={ () => router.push(`product/${product.slug}`)} 
+                            icon={<Expand size={20}/>}
+                            className="text-gray-600"/>
+                            <IconButton 
+                            onClick={ () => console.log("Add Item.")} 
+                            icon={<ShoppingCart size={20}/>}
+                            className="text-gray-600"/>
                           </div>
                         </div>
                       </CardContent>
+                      <div className="flex justify-between gap-4 px-8">
+                        <h3 className="text-lg font-bold">&quot;{product.productName}&quot;</h3>
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="px-2 py-1 text-white bg-black rounded-full dark:bg-white dark:text-black w-fit">{product.category.categoryName}</p>
+                          <p className="px-2 py-1 text-white bg-red-900 rounded-full w-fit">{product.category.categoryName}</p>
+                        </div>
+                      </div>
                     </Card>
                   </div>
                 </CarouselItem>
@@ -44,6 +60,8 @@ const FeaturedProducts = () => {
             })
           )}
         </CarouselContent>
+        <CarouselPrevious/>
+        <CarouselNext className="hidden sm:flex"/>
       </Carousel>
     </div>
    );

@@ -10,9 +10,7 @@ export type ProductType = {
       url: string;
     }[];
   category: {
-    data: {
       slug: string;
       categoryName: string;
-    }
   };
 }

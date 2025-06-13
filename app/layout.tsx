@@ -6,8 +6,9 @@ import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const urbanist = Urbanist({
-  variable: "--font-geist-sans",
+  variable: "--font-urbanist", // Nombre coherente con la fuente
   subsets: ["latin"],
+  display: 'swap', // Añade esto para mejor rendimiento
 });
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${urbanist.variable} antialiased`}
+        className={`${urbanist.variable} font-sans antialiased`}
         >
         <ThemeProvider
             attribute="class"
