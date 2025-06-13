@@ -5,4 +5,7 @@ export type CategoryType = {
   mainImage: {
     url: string;
   };
+  homeImage: {
+    url: string;
+  };
 }

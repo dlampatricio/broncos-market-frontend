@@ -19,10 +19,10 @@ const ChooseCategory = () => {
               href={`/category/${category.slug}`}
               className="relative max-w-xs mx-auto overflow-hidden bg-no-repeat bg-cover rounded-lg">
                 <img
-                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${category.mainImage.url}`}
+                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${category.homeImage.url}`}
                 alt={category.categoryName}
                 className="max-w-[270px] transition-duration-300 ease-in-out rounded-lg hover:scale-110"/>
-                <p className="absolute w-full text-lg font-bold text-center text-white bottom-2 backdrop-blur-lg">{category.categoryName}</p>
+                <p className="absolute w-full text-lg font-bold text-center text-white bottom-2 py-3 backdrop-blur-lg">{category.categoryName}</p>
               </Link>
             ))
           )} 
