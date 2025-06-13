@@ -2,12 +2,23 @@ import { Skeleton } from "./ui/skeleton";
 
 type SkeletonSchemaProps = {
   grid: number;
+  variant?: 'default' | 'category';
 }
 
 const SkeletonSchema = (props: SkeletonSchemaProps) => {
+  const { grid, variant = 'default' } = props; 
 
-  const { grid } = props; 
+  if (variant === 'category') {
+    return (
+      Array.from({length: grid}).map((_, index) => (
+        <div key={index} className="flex flex-col gap-4 mx-auto max-w-[270px] w-full">
+          <Skeleton className="w-full h-[480px] rounded-lg"/>
+        </div>
+      ))
+    );
+  }
 
+  // Variante por defecto (para productos)
   return ( 
     Array.from({length: grid}).map((_, index) => (
       <div key={index} className="flex flex-col gap-8 mx-auto space-y-3">
@@ -18,7 +29,7 @@ const SkeletonSchema = (props: SkeletonSchemaProps) => {
         </div>
       </div>
     ))
-   );
+  );
 }
  
 export default SkeletonSchema;

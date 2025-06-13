@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${urbanist.variable} antialiased`}
+        className={`${urbanist.className} antialiased`}
         >
         <ThemeProvider
             attribute="class"
