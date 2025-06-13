@@ -15,11 +15,11 @@ import {
 
 const MenuList = () => {
   return (
-    <NavigationMenu viewport={false}>
+    <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Productos</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent className="z-50">
             <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {components.map((component) => (
                 <ListItem
@@ -35,7 +35,7 @@ const MenuList = () => {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Sobre Nosotros</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent className="z-50">
             <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
