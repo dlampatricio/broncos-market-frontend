@@ -24,7 +24,7 @@ const FeaturedProducts = () => {
           {loading && (
             <SkeletonSchema grid={3}/>
           )}
-          {result != null && (
+          {result !== null && (
             result.map((product: ProductType) => {
 
               return (
