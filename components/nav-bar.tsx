@@ -22,7 +22,7 @@ const NavBar = () => {
       <div className="flex sm:hidden">
         <ItemsMenuMobile/>
       </div>
-      <div className="flex items-center justify-between gap-2 sm:gap-7">
+      <div className="flex items-center justify-between gap-2 sm:gap-7 pl-2">
         <ShoppingCart strokeWidth="1" className="cursor-pointer" onClick={() => router.push("/cart")}/>
         <Heart strokeWidth="1" className="cursor-pointer" onClick={() => router.push("/loved-products")}/>
         <User strokeWidth="1" className="cursor-pointer"/>

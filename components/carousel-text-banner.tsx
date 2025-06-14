@@ -38,7 +38,7 @@ const CarouselTextBanner = () => {
     <div className="bg-gray-200 dark:bg-primary">
       <Carousel className="w-full max-w-10xl mx-auto" plugins={[
         Autoplay({
-          delay: 2500
+          delay: 5000
         })
       ]}>
           <CarouselContent>

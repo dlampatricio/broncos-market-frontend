@@ -13,4 +13,6 @@ export type ProductType = {
       slug: string;
       categoryName: string;
   };
+  weight: string;
+  familySize: string;
 }
