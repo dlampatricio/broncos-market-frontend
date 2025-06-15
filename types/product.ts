@@ -1,6 +1,7 @@
 export type ProductType = {
   id: string;
   productName: string;
+  description: string;
   slug: string;
   active: boolean;
   isFeatured: boolean;
