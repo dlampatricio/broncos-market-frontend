@@ -2,7 +2,7 @@
 
 import useGetCategoryProduct from "@/api/useGetCategoryProduct";
 import { Separator } from "@/components/ui/separator";
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import SkeletonSchema from "@/components/skeleton-schema";
 import ProductCard from "./components/product-card";
 import { ProductType } from "@/types/product";
@@ -22,9 +22,11 @@ export default function Page() {
       <Separator />
 
       <div className="sm:flex sm:justify-between">
-        <div className="grid gap-5 mt-8 sm:grid-cols-2 md:grid-cols-3 md:gap-10">
+        <div className="grid gap-5 mt-8 sm:grid-cols-2 md:grid-cols-3 md:gap-10 w-full">
           {loading && (
-            <SkeletonSchema grid={3} />
+            <div className="col-span-full flex justify-center w-full">
+              <SkeletonSchema grid={3} />
+            </div>
           )}
           {result !== null && !loading && (
             result.map((product: ProductType) => (
