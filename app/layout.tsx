@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "@/components/nav-bar";
 import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const urbanist = Urbanist({
   variable: "--font-urbanist", // Nombre coherente con la fuente
@@ -34,6 +35,7 @@ export default function RootLayout({
           >
           <NavBar />
           {children}
+          <Toaster />
           <Footer />
         </ThemeProvider>
       </body>
