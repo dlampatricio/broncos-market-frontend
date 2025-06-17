@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export default function useGetCategoryProduct(slug: string | string[]) {
+export default function useGetCategoryProduct(slug: string | string[] | undefined) {
   const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products?populate=*&filters[category][slug][$eq]=${slug}`
   
   const [result, setResult] = useState(null)
