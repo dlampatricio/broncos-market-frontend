@@ -8,9 +8,11 @@ import CartItem from "./components/cart-item"
 
 export default function Page() {
   
-  const { items, removeAll } = useCart()
+  const { items } = useCart()
   const prices = items.map((product => product.price))
   const totalPrice = prices.reduce((total,price) => total + price, 0) 
+  
+  const delivery = 0;
 
   return (
     <div className="max-w-6xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
@@ -31,9 +33,17 @@ export default function Page() {
             <p className="mb-3 text-lg font-semibold dark:text-black">Order Summary</p>
             <Separator className="dark:bg-gray-200"/>
             <div className="flex justify-between gap-5 my-4 dark:text-black">
-              <p>Total</p>
+              <p>Total Productos</p>
               <p>{formatPrice(totalPrice)}</p>
             </div>
+            <div className="flex justify-between gap-5 my-4 dark:text-black">
+              <p>Envío</p>
+              <p>{formatPrice(delivery)}</p>
+            </div>
+            <div className="flex justify-between gap-5 my-4 dark:text-black">
+              <p>Total Venta</p>
+              <p>{formatPrice(totalPrice + delivery)}</p>
+            </div>            
             <div className="flex items-center justify-center w-full mt-3">
               <Button className="w-full dark:bg-neutral-900 dark:text-white" onClick={() => console.log("Comprar")}>Comprar</Button>
             </div>

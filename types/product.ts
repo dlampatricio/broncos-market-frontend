@@ -16,4 +16,5 @@ export type ProductType = {
   };
   weight: string;
   familySize: string;
+  min: number;
 }
