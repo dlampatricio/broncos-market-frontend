@@ -28,7 +28,7 @@ const CartItem = (props: CartItemProps) => {
           <ProductWeightSize weight={product.weight} size={product.familySize}/>
         </div>
         <div>
-            <button className={cn("rounded-full flex items-center justify-center bg-white border shadow-md p-1 hover:scale-110 transition dark:text-black")}>
+            <button className={cn("rounded-full flex items-center ml-9 justify-center bg-white border shadow-md p-1 hover:scale-110 transition dark:text-black cursor-pointer")}>
               <X size={20} onClick={() => removeItem(product.id)} /> 
             </button>
             <ProductQuantity product={product} />

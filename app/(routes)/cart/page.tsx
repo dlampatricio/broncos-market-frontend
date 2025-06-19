@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator"
 import { useCart } from "@/hooks/use-cart"
 import { formatPrice } from "@/lib/format-price"
 import CartItem from "./components/cart-item"
+import { TownsCombobox } from "@/app/(routes)/cart/components/towns-combobox"
 
 export default function Page() {
   
@@ -45,8 +46,11 @@ export default function Page() {
               <p>{formatPrice(totalPrice + delivery)}</p>
             </div>            
             <div className="flex items-center justify-center w-full mt-3">
-              <Button className="w-full dark:bg-neutral-900 dark:text-white" onClick={() => console.log("Comprar")}>Comprar</Button>
+              <Button className="w-full dark:bg-neutral-900 dark:text-white cursor-pointer" onClick={() => console.log("Comprar")}>Comprar</Button>
             </div>
+          </div>
+          <div className="mt-6">
+            <TownsCombobox />
           </div>
         </div>
       </div>

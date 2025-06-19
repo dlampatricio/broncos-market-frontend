@@ -20,10 +20,10 @@ export function ProductQuantity({ product }: ProductQuantityProps) {
   };
 
   return (
-    <div className="items-center gap-2">
+    <div className="items-center gap-2 mt-5">
       <Input
         type="number"
-        className="w-20 text-center"
+        className="w-18 h-7 text-center hover:scale-110 transition shadow-md cursor-pointer"
         min={product.min || 1}
         value={quantity}
         onChange={handleInputChange}
