@@ -18,45 +18,58 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { formatPrice } from "@/lib/format-price"
 
-const frameworks = [
+interface TownsComboboxProps {
+  selectedTown: string;
+  onTownSelect: (town: string) => void;
+}
+
+const towns = [
   {
     value: "cienfuegos",
     label: "Cienfuegos",
+    price: "Free",
   },
   {
     value: "palmira",
     label: "Palmira",
+    price: formatPrice(10),
   },
   {
     value: "rodas",
     label: "Rodas",
+    price: formatPrice(30),
   },
   {
     value: "abreus",
     label: "Abreus",
+    price: formatPrice(20),
   },
   {
     value: "aguada-de-pasajeros",
     label: "Aguada de Pasajeros",
+    price: formatPrice(30)
   },
   {
     value: "cruces",
     label: "Cruces",
+    price: formatPrice(50),
   },
   {
     value: "lajas",
     label: "Lajas",
+    price: formatPrice(40),
   },
   {
     value: "cumanayagua",
     label: "Cumanayagua",
+    price: formatPrice(50),
   },
 ]
 
-export function TownsCombobox() {
+export function TownsCombobox({ selectedTown, onTownSelect }: TownsComboboxProps) {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -67,8 +80,8 @@ export function TownsCombobox() {
           aria-expanded={open}
           className="w-full justify-between hover:scale-101 transition shadow-md cursor-pointer hover:bg-white"
         >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
+          {selectedTown
+            ? towns.find((town) => town.value === selectedTown)?.label
             : "Seleccionar Municipio"}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -83,22 +96,28 @@ export function TownsCombobox() {
           <CommandList>
             <CommandEmpty>Este Municipio no se encuentra.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {towns.map((town) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={town.value}
+                  value={town.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
+                    onTownSelect(currentValue === selectedTown ? "" : currentValue)
                     setOpen(false)
                   }}
+                  className="flex justify-between"
                 >
-                  <CheckIcon
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === framework.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {framework.label}
+                  <div className="flex items-center">
+                    <CheckIcon
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        selectedTown === town.value ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                    {town.label}
+                  </div>
+                  <span className="text-muted-foreground">
+                    {town.price}
+                  </span>
                 </CommandItem>
               ))}
             </CommandGroup>

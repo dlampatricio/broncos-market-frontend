@@ -12,10 +12,20 @@ export type InfoProductProps = {
 }
 
 const InfoProduct = (props: InfoProductProps) => {
-  
   const { product } = props; 
   const { addItem } = useCart()
-  const { addLovedItem } = useLovedProducts()
+  const { lovedItems, addLovedItem, removeLovedItem } = useLovedProducts()
+
+  // Verificar si el producto está en la lista de favoritos
+  const isLoved = lovedItems.some(item => item.id === product.id)
+
+  const handleLoveClick = () => {
+    if (isLoved) {
+      removeLovedItem(product.id) // Quitar de favoritos
+    } else {
+      addLovedItem(product) // Agregar a favoritos
+    }
+  }
 
   return ( 
     <div className="px-6">
@@ -29,7 +39,14 @@ const InfoProduct = (props: InfoProductProps) => {
       <p className="my-4 text-2xl">{formatPrice(product.price)}</p>
       <div className="flex items-center gap-5">
         <Button className="flex-grow" onClick={() => addItem(product)}>Comprar</Button>
-        <Heart width={30} strokeWidth={1} className="flex-shrink-0 transition duration-300 cursor-pointer hover:fill-black" onClick={() => addLovedItem(product)}/>
+        <Heart 
+          width={30} 
+          strokeWidth={1} 
+          className={`flex-shrink-0 transition duration-300 cursor-pointer ${
+            isLoved ? "fill-black" : "hover:fill-black"
+          }`} 
+          onClick={handleLoveClick}
+        />
       </div>
     </div>
    );

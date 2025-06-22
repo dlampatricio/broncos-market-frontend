@@ -6,14 +6,28 @@ import { useCart } from "@/hooks/use-cart"
 import { formatPrice } from "@/lib/format-price"
 import CartItem from "./components/cart-item"
 import { TownsCombobox } from "@/app/(routes)/cart/components/towns-combobox"
+import { useState } from "react"
 
 export default function Page() {
-  
   const { items } = useCart()
   const prices = items.map((product => product.price))
   const totalPrice = prices.reduce((total,price) => total + price, 0) 
   
-  const delivery = 0;
+  const [selectedTown, setSelectedTown] = useState<string>("")
+  
+  // Precios de envío por municipio
+  const deliveryPrices: Record<string, number> = {
+    "cienfuegos": 0,
+    "palmira": 10,
+    "rodas": 30,
+    "abreus": 20,
+    "aguada-de-pasajeros": 30,
+    "cruces": 50,
+    "lajas": 40,
+    "cumanayagua": 50
+  }
+  
+  const delivery = selectedTown ? deliveryPrices[selectedTown] || 0 : 0;
 
   return (
     <div className="max-w-6xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
@@ -50,7 +64,10 @@ export default function Page() {
             </div>
           </div>
           <div className="mt-6">
-            <TownsCombobox />
+            <TownsCombobox 
+              selectedTown={selectedTown}
+              onTownSelect={setSelectedTown}
+            />
           </div>
         </div>
       </div>
