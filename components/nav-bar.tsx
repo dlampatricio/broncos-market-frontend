@@ -15,8 +15,8 @@ const NavBar = () => {
 
   return (
 
-    <div className="flex items-center justify-between p-4 mx-auto cursor-pointer sm:max-w-4xl md:max-w-6xl">
-      <h1 className="text-3xl" onClick={() => router.push("/")}>
+    <div className="flex items-center justify-between p-4 mx-auto sm:max-w-4xl md:max-w-6xl">
+      <h1 className="text-3xl cursor-pointer" onClick={() => router.push("/")}>
         <span className="font-bold">Bronco&apos;s </span>
         Market
       </h1>
@@ -35,8 +35,8 @@ const NavBar = () => {
           </div>
         )}
         <Heart strokeWidth="1" className={`cursor-pointer ${lovedItems.length > 0 && 'fill-black dark:fill-white'}`} onClick={() => router.push("/loved-products")}/>
-        <User strokeWidth="1" className="cursor-pointer"/>
-        <ToggleTheme/>
+        <User strokeWidth="1" className="cursor-pointer" onClick={() => router.push("/user")}/>
+        <ToggleTheme />
       </div>
     </div>
   )
