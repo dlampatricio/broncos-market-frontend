@@ -11,11 +11,11 @@ const ItemsMenuMobile = () => {
         </PopoverTrigger>
         <PopoverContent>
           <Link href="/category/combos" className="block">Combos</Link>
-          <Link href="/category/dairy" className="block">Lácteos</Link>
-          <Link href="/category/meats" className="block">Cárnicos</Link>
-          <Link href="/category/drinks" className="block">Bebidas</Link>
-          <Link href="/category/jams" className="block">Confituras</Link>
-          <Link href="/category/others" className="block">Otros</Link>
+          <Link href="/category/lacteos" className="block">Lácteos</Link>
+          <Link href="/category/carnicos" className="block">Cárnicos</Link>
+          <Link href="/category/bebidas" className="block">Bebidas</Link>
+          <Link href="/category/confituras" className="block">Confituras</Link>
+          <Link href="/category/otros" className="block">Otros</Link>
         </PopoverContent>
       </Popover>
     </div>

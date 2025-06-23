@@ -77,30 +77,30 @@ const components: { title: string; href: string; description: string }[] = [
   },
   {
     title: "Lácteos",
-    href: "/category/dairy",
+    href: "/category/lacteos",
     description:
       "Productos frescos y esenciales como quesos, leche, mantequilla y más. Nutrición y sabor en cada opción, perfectos para tu dieta diaria.",
   },
   {
     title: "Cárnicos",
-    href: "/category/meats",
+    href: "/category/carnicos",
     description:
       "Cortes selectos de carne de cerdo, pollo, res y embutidos de alta calidad. Frescura garantizada para tus comidas favoritas.",
   },
   {
     title: "Bebidas",
-    href: "/category/drinks",
+    href: "/category/bebidas",
     description: "Refrescos, jugos, café y otras bebidas para hidratarte y disfrutar en cualquier momento. ¡Frías o calientes, siempre deliciosas!",
   },
   {
     title: "Confituras",
-    href: "/category/jams",
+    href: "/category/confituras",
     description:
       "Dulces, azúcar, leche condensada y otros productos para endulzar tu día. Postres, meriendas y antojos cubiertos con calidad.",
   },
   {
     title: "Otros",
-    href: "/category/others",
+    href: "/category/otros",
     description:
       "Aceites, pastas, condimentos y artículos variados para complementar tu despensa. Todo lo que necesitas en un solo lugar.",
   },
