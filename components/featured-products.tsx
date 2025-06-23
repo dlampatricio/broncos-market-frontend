@@ -42,8 +42,8 @@ const FeaturedProducts = () => {
                   d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <h3 className="text-lg font-medium text-gray-900">No se pudieron cargar los productos</h3>
-              <p className="mt-1 text-sm text-gray-500">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white">No se pudieron cargar los productos</h3>
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 No hay productos destacados disponibles en este momento.
               </p>
             </div>
