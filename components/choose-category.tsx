@@ -13,11 +13,31 @@ const ChooseCategory = () => {
   return ( 
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
       <h3 className="px-6 pb-4 text-3xl sm:pb-8">Elige Tu Categoría Favorita</h3>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {loading && (
-            <SkeletonSchema grid={3} variant="category"/>
-          )}
-          {!loading && result !== undefined && (
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {loading ? (
+          <SkeletonSchema grid={3} variant="category"/>
+        ) : !result || result.length === 0 ? (
+          <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-12 w-12 text-gray-400 mb-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <h3 className="text-lg font-medium text-gray-900">No se pudieron cargar las categorías</h3>
+            <p className="mt-1 text-sm text-gray-500">
+              No hay categorías disponibles en este momento. Por favor intenta más tarde.
+            </p>
+          </div>
+        ) : (
             result.map((category: CategoryType) => (
               <Link key={category.id} 
               href={`/category/${category.slug}`}
