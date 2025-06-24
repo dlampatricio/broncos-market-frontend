@@ -50,6 +50,7 @@ const ChooseCategory = () => {
                     height={150} // Alto estimado según tu diseño
                     className="transition-duration-300 ease-in-out rounded-lg hover:scale-110"
                     style={{ maxWidth: '270px', height: 'auto' }} // Mantener relación de aspecto
+                    quality={20}
                   />
                   <p className="absolute w-full text-lg font-bold text-center text-white bottom-2 py-3 backdrop-blur-md">
                     {category.categoryName}
