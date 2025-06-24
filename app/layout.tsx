@@ -16,6 +16,9 @@ const urbanist = Urbanist({
 export const metadata: Metadata = {
   title: "Bronco's Market",
   description: "Cienfuegos Best Combos",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
