@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 
 import { useGetCategories } from "@/api/useGetCategories";
@@ -5,7 +6,6 @@ import { CategoryType } from "@/types/category";
 import { ResponseType } from "@/types/response";
 import Link from "next/link";
 import SkeletonSchema from "./skeleton-schema";
-import Image from "next/image";
 
 const ChooseCategory = () => {
   const {result, loading}: ResponseType = useGetCategories();
@@ -42,7 +42,7 @@ const ChooseCategory = () => {
               <Link key={category.id} 
                 href={`/category/${category.slug}`}
                 className="relative max-w-xs mx-auto overflow-hidden bg-no-repeat bg-cover rounded-lg">
-                  <Image
+                  <img
                     src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${category.homeImage.url}`}
                     alt={category.categoryName}
                     width={270}  // Ancho deseado

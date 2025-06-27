@@ -1,9 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { CheckIcon, ChevronsUpDownIcon } from "lucide-react"
+import { ChevronsUpDownIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -29,7 +28,7 @@ const towns = [
   {
     value: "cienfuegos",
     label: "Cienfuegos",
-    price: "Free",
+    price: "Gratis",
   },
   {
     value: "palmira",
@@ -78,7 +77,7 @@ export function TownsCombobox({ selectedTown, onTownSelect }: TownsComboboxProps
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between hover:scale-101 transition shadow-md cursor-pointer hover:bg-white"
+          className="w-full justify-between cursor-pointer hover:bg-white"
         >
           {selectedTown
             ? towns.find((town) => town.value === selectedTown)?.label
@@ -106,13 +105,7 @@ export function TownsCombobox({ selectedTown, onTownSelect }: TownsComboboxProps
                   }}
                   className="flex justify-between"
                 >
-                  <div className="flex items-center">
-                    <CheckIcon
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        selectedTown === town.value ? "opacity-100" : "opacity-0"
-                      )}
-                    />
+                  <div className="flex items-center ">
                     {town.label}
                   </div>
                   <span className="text-muted-foreground">
