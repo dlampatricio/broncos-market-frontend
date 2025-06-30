@@ -6,6 +6,10 @@ export type CategoryType = {
     url: string;
   };
   homeImage: {
-    url: string;
+    formats: {
+      medium: {
+        url: string;
+      }
+    }
   };
 }

@@ -44,7 +44,7 @@ const ChooseCategory = () => {
                 href={`/category/${category.slug}`}
                 className="relative max-w-xs mx-auto overflow-hidden bg-no-repeat bg-cover rounded-lg">
                   <Image
-                    src={`${category.homeImage.url}`}
+                    src={`${category.homeImage.formats.medium.url}`}
                     alt={category.categoryName}
                     width={270}  // Ancho deseado
                     height={150} // Alto estimado según tu diseño
