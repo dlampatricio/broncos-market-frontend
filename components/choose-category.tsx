@@ -6,7 +6,6 @@ import { CategoryType } from "@/types/category";
 import { ResponseType } from "@/types/response";
 import Link from "next/link";
 import SkeletonSchema from "./skeleton-schema";
-import Image from "next/image";
 
 const ChooseCategory = () => {
   const {result, loading}: ResponseType = useGetCategories();
@@ -43,14 +42,13 @@ const ChooseCategory = () => {
               <Link key={category.id} 
                 href={`/category/${category.slug}`}
                 className="relative max-w-xs mx-auto overflow-hidden bg-no-repeat bg-cover rounded-lg">
-                  <Image
+                  <img
                     src={`${category.homeImage.formats.medium.url}`}
                     alt={category.categoryName}
                     width={270}  // Ancho deseado
                     height={150} // Alto estimado según tu diseño
                     className="transition-duration-300 ease-in-out rounded-lg hover:scale-110"
                     style={{ maxWidth: '270px', height: 'auto' }} // Mantener relación de aspecto
-                    quality={20}
                   />
                   <p className="absolute w-full text-lg font-bold text-center text-white bottom-2 py-3 backdrop-blur-md">
                     {category.categoryName}
