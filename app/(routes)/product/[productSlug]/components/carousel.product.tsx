@@ -3,9 +3,13 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 
 interface CarouselProductProps {
   images: {
-    id: string;
-    url: string;
-  }[]
+    formats: {
+      small: {
+        id: number;
+        url: string;
+      }
+    }
+  }[];
 }
 
 const CarouselProduct = (props: CarouselProductProps) => {
@@ -19,8 +23,8 @@ const CarouselProduct = (props: CarouselProductProps) => {
       <Carousel>
         <CarouselContent>
           {images.map((image) => (
-            <CarouselItem key={image.id}>
-              <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${image.url}`} alt="Imagen del Producto" className="rounded-lg" />
+            <CarouselItem key={image.formats.small.id}>
+              <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${image.formats.small.url}`} alt="Imagen del Producto" className="rounded-lg" />
             </CarouselItem> 
           ))}
         </CarouselContent>

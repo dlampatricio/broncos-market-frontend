@@ -7,9 +7,13 @@ export type ProductType = {
   isFeatured: boolean;
   price: number;
   images: {
-      id: number;
-      url: string;
-    }[];
+    formats: {
+      small: {
+        id: number;
+        url: string;
+      }
+    }
+  }[];
   category: {
       slug: string;
       categoryName: string;
