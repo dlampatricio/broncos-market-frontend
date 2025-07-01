@@ -3,9 +3,9 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 
 interface CarouselProductProps {
   images: {
+    id: number;
     formats: {
       small: {
-        id: number;
         url: string;
       }
     }
@@ -23,7 +23,7 @@ const CarouselProduct = (props: CarouselProductProps) => {
       <Carousel>
         <CarouselContent>
           {images.map((image) => (
-            <CarouselItem key={image.formats.small.id}>
+            <CarouselItem key={image.id}>
               <img src={`${image.formats.small.url}`} alt="Imagen del Producto" className="rounded-lg" />
             </CarouselItem> 
           ))}
