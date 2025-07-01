@@ -18,7 +18,9 @@ const ChooseCategory = () => {
       
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {loading ? (
-          <SkeletonSchema grid={3} variant="category" />
+          Array.from({length: 3}).map((_, index) => (
+            <SkeletonSchema key={index} grid={1} variant="category"/>
+          ))
         ) : !result || result.length === 0 ? (
           <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
             <svg
