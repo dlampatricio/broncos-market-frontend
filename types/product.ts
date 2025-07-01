@@ -7,9 +7,9 @@ export type ProductType = {
   isFeatured: boolean;
   price: number;
   images: {
+    id: number;
     formats: {
       small: {
-        id: number;
         url: string;
       }
     }
