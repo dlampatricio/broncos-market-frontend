@@ -1,17 +1,17 @@
-import Link from "next/link";
-import { buttonVariants } from "./ui/button";
-
 const BannerProduct = () => {
   return ( 
-    <>
-      <div className="mt-4 text-center">
-        <p>Olvídate de las colas y el estrés</p>
-        <h4 className="mt-2 text-5xl font-extrabold uppercase">Bronco&apos;s Market</h4>
-        <p className="my-2 text-lg">Lo esencial llega a tu puerta, sin complicaciones</p>
-        <Link href="#" className={buttonVariants()}>Comprar</Link>
+    <div className="relative">
+      <div className="absolute inset-0 bg-black/50 z-10 flex flex-col items-center justify-center text-center px-4">
+        <p className="text-white/90 mb-2">Olvídate de las colas y el estrés</p>
+        <h4 className="text-4xl sm:text-6xl font-bold text-white mb-4">
+          BRONCO&apos;S MARKET
+        </h4>
+        <p className="text-white/80 mb-6 text-lg max-w-xl mx-auto">
+          Lo esencial llega a tu puerta, sin complicaciones
+        </p>
       </div>
-      <div className="h-[350px] bg-cover lg:h-[700px] bg-[url('/slider-image.jpg')] bg-center mt-5" />
-    </>
+      <div className="h-[80vh] bg-cover bg-center bg-[url('/slider-image.jpg')]" />
+    </div>
    );
 }
  

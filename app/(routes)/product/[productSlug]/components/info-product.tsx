@@ -43,7 +43,7 @@ const InfoProduct = (props: InfoProductProps) => {
           width={30} 
           strokeWidth={1} 
           className={`flex-shrink-0 transition duration-300 cursor-pointer ${
-            isLoved ? "fill-black" : "hover:fill-black"
+            isLoved ? "fill-black dark:fill-white" : "hover:fill-black dark:hover:fill-white"
           }`} 
           onClick={handleLoveClick}
         />
