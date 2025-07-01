@@ -63,7 +63,7 @@ const FeaturedProducts = () => {
                     {/* Image with hover container */}
                     <div className="relative overflow-hidden bg-muted transition-transform duration-300 sm:group-hover:scale-[1.02] sm:group-hover:shadow-md">
                       <img 
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${product.images[0].formats.small.url}`} 
+                        src={`${product.images[0].formats.small.url}`} 
                         alt={product.productName}
                         className="object-cover w-full"
                         loading="lazy"
