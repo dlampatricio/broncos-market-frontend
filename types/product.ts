@@ -9,7 +9,7 @@ export type ProductType = {
   images: {
     id: number;
     formats: {
-      small: {
+      medium: {
         url: string;
       }
     }

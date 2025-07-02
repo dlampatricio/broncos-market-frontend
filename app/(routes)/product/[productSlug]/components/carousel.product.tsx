@@ -5,7 +5,7 @@ interface CarouselProductProps {
   images: {
     id: number;
     formats: {
-      small: {
+      medium: {
         url: string;
       }
     }
@@ -16,15 +16,13 @@ const CarouselProduct = (props: CarouselProductProps) => {
   
   const { images } = props;
   
-  console.log(images);
-
   return ( 
     <div className="sm:px-16">
       <Carousel>
         <CarouselContent>
           {images.map((image) => (
             <CarouselItem key={image.id}>
-              <img src={`${image.formats.small.url}`} alt="Imagen del Producto" className="rounded-lg" />
+              <img src={`${image.formats.medium.url}`} alt="Imagen del Producto" className="rounded-lg" />
             </CarouselItem> 
           ))}
         </CarouselContent>

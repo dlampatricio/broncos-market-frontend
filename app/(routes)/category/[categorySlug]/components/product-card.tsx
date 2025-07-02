@@ -31,7 +31,7 @@ const ProductCard = (props: ProductCardProps) => {
         <CarouselContent>
           {product.images.map((image) => (
             <CarouselItem key={image.id} className="group">
-              <img src={`${image.formats.small.url}`}
+              <img src={`${image.formats.medium.url}`}
               alt="Imagen"
               className="rounded-xl"
               />

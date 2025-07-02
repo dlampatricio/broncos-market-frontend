@@ -11,7 +11,6 @@ import IconButton from "./icon-button";
 import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/format-price";
 import { useCart } from "@/hooks/use-cart";
-import Link from "next/link";
 
 const FeaturedProducts = () => {
   const { loading, result }: ResponseType = useGetFeaturedProducts()
@@ -61,9 +60,9 @@ const FeaturedProducts = () => {
                 <div className="p-0 sm:p-1">
                   <div className="group relative block overflow-hidden sm:rounded-lg border-0 sm:border border-border">
                     {/* Image with hover container */}
-                    <div className="relative overflow-hidden bg-muted transition-transform duration-300 sm:group-hover:scale-[1.02] sm:group-hover:shadow-md">
+                    <div className="relative overflow-hidden bg-muted transition-transform duration-300 sm:group-hover:scale-[1.02] sm:group-hover:shadow-md cursor-pointer" onClick={() => router.push(`product/${product.slug}`)}>
                       <img 
-                        src={`${product.images[0].formats.small.url}`} 
+                        src={`${product.images[0].formats.medium.url}`} 
                         alt={product.productName}
                         className="object-cover w-full"
                         loading="lazy"
@@ -75,24 +74,21 @@ const FeaturedProducts = () => {
                         <IconButton 
                           onClick={() => router.push(`product/${product.slug}`)} 
                           icon={<Expand size={20}/>}
-                          className="text-gray-600"
+                          className="text-gray-600 cursor-pointer"
                         />
                         <IconButton 
                           onClick={() => addItem(product)} 
                           icon={<ShoppingCart size={20}/>}
-                          className="text-gray-600"
+                          className="text-gray-600 cursor-pointer"
                         />
                       </div>
                     </div>
                     {/* Product info */}
                     <div className="p-4 sm:px-4 sm:py-2">
                       <div className="flex justify-between items-start">
-                        <Link 
-                          href={`product/${product.slug}`} 
-                          className="text-lg font-bold hover:text-primary transition-colors duration-200"
-                        >
-                          {product.productName}
-                        </Link>
+                        <p className="text-lg font-bold hover:text-primary transition-colors duration-200">
+                          &quot;{product.productName}&quot;
+                        </p>
                         <p className="px-3 py-1 text-sm font-medium text-white bg-red-900 rounded-full">
                           {formatPrice(product.price)}
                         </p>

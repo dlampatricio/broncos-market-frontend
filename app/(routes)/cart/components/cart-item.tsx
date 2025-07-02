@@ -20,7 +20,7 @@ const CartItem = (props: CartItemProps) => {
 
   return ( 
     <li className="flex py-6 border-b">
-      <ProductImageMiniature slug={product.slug} url={product.images[0].formats.small.url} />
+      <ProductImageMiniature slug={product.slug} url={product.images[0].formats.medium.url} />
       <div className="flex justify-between flex-1 px-6">
         <div>
           <h2 className="text-lg font-bold">{product.productName}</h2>

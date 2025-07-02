@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client"
 
 import { useGetCategories } from "@/api/useGetCategories";
@@ -52,19 +51,31 @@ const ChooseCategory = () => {
               className="group relative block overflow-hidden rounded-lg transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-900"
             >
               <div className="aspect-w-16 aspect-h-9 w-full">
-                <img
-                  src={`${category.homeImage.formats.medium.url}`}
-                  alt={category.categoryName}
-                  className="object-cover w-full h-full rounded-lg"
-                  loading="lazy"
-                />
+                <picture>
+                  {/* Imagen para móviles */}
+                  <source 
+                    media="(max-width: 767px)" 
+                    srcSet={category.mainImage.formats.medium.url}
+                  />
+                  {/* Imagen para tablets y desktop */}
+                  <source 
+                    media="(min-width: 768px)" 
+                    srcSet={category.homeImage.formats.medium.url}
+                  />
+                  <img
+                    src={category.homeImage.formats.medium.url}
+                    alt={category.categoryName}
+                    className="object-cover w-full h-full rounded-lg"
+                    loading="lazy"
+                  />
+                </picture>
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-lg" />
               <div className="absolute bottom-0 left-0 right-0 p-4">
-                <h3 className="text-xl font-bold text-white group-hover:text-red-300 transition-colors duration-300">
+                <h3 className="text-xl font-bold text-white sm:group-hover:text-red-300 transition-colors duration-300">
                   {category.categoryName}
                 </h3>
-                <span className="inline-block mt-1 text-sm font-medium text-red-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="inline-block mt-1 text-sm font-medium text-white sm:text-red-300 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   Explorar →
                 </span>
               </div>
