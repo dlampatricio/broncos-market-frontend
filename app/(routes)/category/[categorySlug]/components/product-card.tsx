@@ -5,7 +5,6 @@ import { useCart } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/format-price";
 import { ProductType } from "@/types/product";
 import { Expand, ShoppingCart } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 type ProductCardProps = {
@@ -13,42 +12,61 @@ type ProductCardProps = {
 }
 
 const ProductCard = (props: ProductCardProps) => {
-  
   const { product } = props;
-  const { addItem } = useCart()
+  const { addItem } = useCart();
   const router = useRouter();
 
-  console.log(product)
-
-  return ( 
-    <Link href={`/product/${product.slug}`} 
-    className="relative p-2 transition-all duration-100 rounded-lg hover:shadow-md">
+  return (
+    <div className="group relative overflow-hidden rounded-none sm:rounded-lg border border-border transition-all duration-300 hover:shadow-lg">
       <Carousel
-        opts={{
-          align: "start"
-        }}
-        className="w-full max-w-sm">
+        opts={{ align: "start" }}
+        className="w-full"
+      >
         <CarouselContent>
           {product.images.map((image) => (
-            <CarouselItem key={image.id} className="group">
-              <img src={`${image.formats.medium.url}`}
-              alt="Imagen"
-              className="rounded-xl"
-              />
-              <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100 bottom-5">
-                <div className="flex justify-center gap-x-6">
-                  <IconButton onClick={() => router.push(`/product/${product.slug}`)} icon={<Expand size={20} className="text-gray-600" />} />
-                  <IconButton onClick={() => addItem(product)} icon={<ShoppingCart size={20} className="text-gray-600" />} />
+            <CarouselItem key={image.id}>
+              <div className="relative overflow-hidden cursor-pointer" onClick={() => {
+                      router.push(`/product/${product.slug}`);
+                    }}>
+                <img 
+                  src={image.formats.medium.url}
+                  alt={product.productName}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                {/* Overlay con botones centrados */}
+                <div className="absolute inset-0 flex items-center justify-center gap-4 bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <IconButton 
+                    onClick={() => {
+                      router.push(`/product/${product.slug}`);
+                    }}
+                    icon={<Expand size={20} className="text-gray-800" />}
+                    className="bg-white/90 hover:bg-white cursor-pointer"
+                  />
+                  <IconButton 
+                    onClick={() => {
+                      addItem(product);
+                    }}
+                    icon={<ShoppingCart size={20} className="text-gray-800" />}
+                    className="bg-white/90 hover:bg-white cursor-pointer"
+                  />
                 </div>
               </div>
             </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-        <p className="text-2xl text-center">{product.productName}</p>
-        <p className="font-bold text-center">{formatPrice(product.price)}</p>
-    </Link>
-   );
-}
- 
+          ))}
+        </CarouselContent>
+      </Carousel>
+
+      <div className="p-4 flex justify-between items-center">
+          <h3 className="text-lg font-medium text-foreground transition-colors duration-200 group-hover:text-primary line-clamp-1">
+            {product.productName}
+          </h3>
+        <p className="text-lg font-bold text-primary ml-4">
+          {formatPrice(product.price)}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 export default ProductCard;
