@@ -4,7 +4,7 @@ import { ProductType } from "@/types/product"
 import { useCart } from "@/hooks/use-cart"
 import { formatPrice } from "@/lib/format-price"
 import ProductImageMiniature from "@/components/shared/product-image-miniature"
-import ProductWeightSize from "@/components/shared/product-weight-size"
+// import ProductWeightSize from "@/components/shared/product-weight-size"
 
 interface CartItemProps {
   product: ProductType
@@ -37,10 +37,10 @@ const CartItem = ({ product, quantity, onQuantityChange }: CartItemProps) => {
             <p className="font-bold text-primary">
               {formatPrice(product.price * quantity)}
             </p>
-            <ProductWeightSize 
+            {/* <ProductWeightSize 
               weight={product.weight} 
               size={product.familySize}
-            />
+            /> */}
           </div>
           <div className="flex flex-col justify-between h-full">
             <div className="flex justify-end">

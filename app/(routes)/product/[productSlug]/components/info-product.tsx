@@ -1,4 +1,4 @@
-import ProductWeightSize from "@/components/shared/product-weight-size";
+// import ProductWeightSize from "@/components/shared/product-weight-size";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/hooks/use-cart";
@@ -31,7 +31,7 @@ const InfoProduct = (props: InfoProductProps) => {
     <div className="px-6">
       <div className="justify-between mb-3 sm:flex">
         <h1 className="text-2xl">&quot;{product.productName}&quot;</h1>
-        <ProductWeightSize weight={product.weight} size={product.familySize}/>
+        {/* <ProductWeightSize weight={product.weight} size={product.familySize}/> */}
       </div>
       <Separator className="my-4"/>
       <p>{product.description}</p>

@@ -1,5 +1,5 @@
 import ProductImageMiniature from "@/components/shared/product-image-miniature";
-import ProductWeightSize from "@/components/shared/product-weight-size";
+// import ProductWeightSize from "@/components/shared/product-weight-size";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/use-cart";
 import { useLovedProducts } from "@/hooks/use-loved-products";
@@ -33,10 +33,10 @@ const LovedItemProduct = (props: LovedItemProductProps) => {
           <div>
             <h2 className="font-bold line-clamp-1">{product.productName}</h2>
             <p className="font-bold text-primary">{formatPrice(product.price)}</p>
-            <ProductWeightSize 
+            {/* <ProductWeightSize 
               weight={product.weight} 
               size={product.familySize}
-            />
+            /> */}
             <Button 
               className="mt-3 rounded-full shadow-sm"
               onClick={() => addItem(product)}
