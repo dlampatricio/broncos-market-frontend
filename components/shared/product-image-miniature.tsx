@@ -1,24 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
-import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface ProductImageMiniatureProps {
   slug: string;
   url: string;
+  className?: string;
 }
 
-const ProductImageMiniature = (props: ProductImageMiniatureProps) => {
-  
-  const { slug, url } = props;
-  const router = useRouter();
-  
-  return ( 
-    <div onClick={() => router.push(`/product/${slug}`)}>
-        <img
-          src={`${url}`}
-          alt="Producto"
-          className="w-24 h-24 overflow-hidden rounded-md sm:w-auto sm:h-32" />
-      </div>
-   );
+const ProductImageMiniature = ({ slug, url, className }: ProductImageMiniatureProps) => {
+  return (
+    <Link href={`/product/${slug}`}>
+      <img
+        src={url}
+        alt={slug}
+        className={cn("rounded-md", className)}
+      />
+    </Link>
+  );
 }
  
 export default ProductImageMiniature;

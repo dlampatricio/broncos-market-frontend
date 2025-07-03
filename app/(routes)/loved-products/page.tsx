@@ -3,25 +3,28 @@ import { useLovedProducts } from "@/hooks/use-loved-products"
 import LovedItemProduct from "./components/loved-item-product"
 
 export default function Page() {
-
   const { lovedItems } = useLovedProducts()
 
   return (
-    <div className="max-w-4xl py-4 mx-auto sm:py-32 sm:px-24">
-      <h1 className="text-3xl sm:text-2xl">
+    <div className="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <h1 className="mb-8 text-3xl font-bold text-gray-900 dark:text-white">
         Productos que te gustan
       </h1>
-      <div>
-        <div>
-          {lovedItems.length == 0 && (
-            <p>No hay productos en la sección de Me gusta.</p>
-          )}
-          <ul>
+      
+      <div className="space-y-4">
+        {lovedItems.length === 0 ? (
+          <div className="p-6 text-center bg-white rounded-lg shadow-sm dark:bg-card">
+            <p className="text-gray-600 dark:text-gray-300">
+              No hay productos en tu lista de favoritos
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {lovedItems.map((item) => (
               <LovedItemProduct key={item.id} product={item} />
             ))}
-          </ul>
-        </div>
+          </div>
+        )}
       </div>
     </div>
   )

@@ -77,7 +77,7 @@ export function TownsCombobox({ selectedTown, onTownSelect }: TownsComboboxProps
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between cursor-pointer hover:bg-white"
+          className="w-full justify-between hover:bg-gray-50 dark:hover:bg-gray-800"
         >
           {selectedTown
             ? towns.find((town) => town.value === selectedTown)?.label
@@ -85,15 +85,11 @@ export function TownsCombobox({ selectedTown, onTownSelect }: TownsComboboxProps
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent 
-        className="w-[var(--radix-popover-trigger-width)] p-0"
-        align="start"
-        sideOffset={4}
-      >
-        <Command className="w-full">
+      <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+        <Command>
           <CommandInput placeholder="Buscar municipio..." />
           <CommandList>
-            <CommandEmpty>Este Municipio no se encuentra.</CommandEmpty>
+            <CommandEmpty>Municipio no encontrado</CommandEmpty>
             <CommandGroup>
               {towns.map((town) => (
                 <CommandItem
@@ -103,14 +99,10 @@ export function TownsCombobox({ selectedTown, onTownSelect }: TownsComboboxProps
                     onTownSelect(currentValue === selectedTown ? "" : currentValue)
                     setOpen(false)
                   }}
-                  className="flex justify-between"
+                  className="flex justify-between px-4 py-2"
                 >
-                  <div className="flex items-center ">
-                    {town.label}
-                  </div>
-                  <span className="text-muted-foreground">
-                    {town.price}
-                  </span>
+                  <span>{town.label}</span>
+                  <span className="text-muted-foreground">{town.price}</span>
                 </CommandItem>
               ))}
             </CommandGroup>

@@ -11,7 +11,6 @@ interface ProductQuantityProps {
 export function ProductQuantity({ product }: ProductQuantityProps) {
   const [quantity, setQuantity] = useState<number>(product.min || 1);
 
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     if (!isNaN(value)) {
@@ -20,10 +19,10 @@ export function ProductQuantity({ product }: ProductQuantityProps) {
   };
 
   return (
-    <div className="items-center gap-2 mt-5">
+    <div className="flex items-center">
       <Input
         type="number"
-        className="w-18 h-7 text-center hover:scale-110 transition shadow-md cursor-pointer"
+        className="w-15 h-6 text-center shadow-sm"
         min={product.min || 1}
         value={quantity}
         onChange={handleInputChange}
