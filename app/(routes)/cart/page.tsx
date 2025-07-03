@@ -8,14 +8,23 @@ import CartItem from "./components/cart-item"
 import { TownsCombobox } from "@/app/(routes)/cart/components/towns-combobox"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { Input } from "@/components/ui/input"
 
 export default function Page() {
   const { items, removeAll } = useCart()
-  const prices = items.map((product => product.price))
-  const totalPrice = prices.reduce((total,price) => total + price, 0) 
+  const [selectedTown, setSelectedTown] = useState<string>("")
+  const [address, setAddress] = useState<string>("")
   const router = useRouter()
   
-  const [selectedTown, setSelectedTown] = useState<string>("")
+  // Estado para manejar las cantidades de cada producto
+  const [quantities, setQuantities] = useState<Record<string, number>>(
+    items.reduce((acc, item) => ({ ...acc, [item.id]: 1 }), {}
+  ))
+
+  // Calcular precios teniendo en cuenta las cantidades
+  const totalPrice = items.reduce((total, product) => {
+    return total + (product.price * (quantities[product.id] || 1))
+  }, 0) 
   
   const deliveryPrices: Record<string, number> = {
     "cienfuegos": 0,
@@ -30,14 +39,31 @@ export default function Page() {
   
   const delivery = selectedTown ? deliveryPrices[selectedTown] || 0 : 0;
 
-  const handleBuyClick = () => {
-    const productsList = items.map(item => `- ${item.productName} (${formatPrice(item.price)})`).join('%0A');
-    const message = `¡Hola! Quiero hacer un pedido:%0A%0A*Productos:*%0A${productsList}%0A%0A*Municipio de entrega:* ${selectedTown}%0A*Total productos:* ${formatPrice(totalPrice)}%0A*Envío:* ${formatPrice(delivery)}%0A*Total a pagar:* ${formatPrice(totalPrice + delivery)}`;
-    
-    window.open(`https://wa.me/5353811810?text=${message}`, '_blank');
-    router.push('/success')
-    removeAll();
+  // Función para actualizar la cantidad de un producto
+  const handleQuantityChange = (productId: string, newQuantity: number) => {
+    if (newQuantity >= 1) {
+      setQuantities(prev => ({
+        ...prev,
+        [productId]: newQuantity
+      }))
+    }
   }
+
+  const handleBuyClick = () => {
+    const productsList = items.map(item => {
+      const quantity = quantities[item.id] || 1
+      return `- ${item.productName} (${formatPrice(item.price)} x ${quantity} = ${formatPrice(item.price * quantity)})`
+    }).join('%0A')
+    
+    const message = `¡Hola! Quiero hacer un pedido:%0A%0A*Productos:*%0A${productsList}%0A%0A*Municipio de entrega:* ${selectedTown}%0A*Dirección:* ${address}%0A*Total productos:* ${formatPrice(totalPrice)}%0A*Envío:* ${formatPrice(delivery)}%0A*Total a pagar:* ${formatPrice(totalPrice + delivery)}`
+    
+    window.open(`https://wa.me/5353811810?text=${message}`, '_blank')
+    router.push('/success')
+    removeAll()
+  }
+
+  // Calcular total de artículos (sumando cantidades)
+  const totalItems = Object.values(quantities).reduce((total, qty) => total + qty, 0)
 
   return (
     <div className="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -53,7 +79,12 @@ export default function Page() {
           ) : (
             <ul className="space-y-4">
               {items.map((item) => (
-                <CartItem key={item.id} product={item} />
+                <CartItem 
+                  key={item.id} 
+                  product={item}
+                  quantity={quantities[item.id] || 1}
+                  onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
+                />
               ))}
             </ul>
           )}
@@ -68,7 +99,7 @@ export default function Page() {
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span className="text-gray-600 dark:text-gray-300">
-                  Subtotal ({items.length} {items.length === 1 ? 'artículo' : 'artículos'})
+                  Subtotal ({totalItems} {totalItems === 1 ? 'artículo' : 'artículos'})
                 </span>
                 <span className="font-medium text-gray-900 dark:text-white">
                   {formatPrice(totalPrice)}
@@ -102,10 +133,22 @@ export default function Page() {
               />
             </div>
 
+            <div className="space-y-3 pt-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Dirección exacta
+              </label>
+              <Input
+                placeholder="Calle, número, entre calles..."
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="w-full"
+              />
+            </div>
+
             <Button 
               className="w-full py-6 text-base font-medium shadow-md"
               onClick={handleBuyClick}
-              disabled={items.length === 0 || !selectedTown}
+              disabled={items.length === 0 || !selectedTown || !address}
             >
               Finalizar compra
             </Button>
