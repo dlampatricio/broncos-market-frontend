@@ -33,37 +33,37 @@ const towns = [
   {
     value: "palmira",
     label: "Palmira",
-    price: formatPrice(10),
+    price: formatPrice(5),
   },
   {
     value: "rodas",
     label: "Rodas",
-    price: formatPrice(30),
+    price: formatPrice(10),
   },
   {
     value: "abreus",
     label: "Abreus",
-    price: formatPrice(20),
+    price: formatPrice(10),
   },
   {
     value: "aguada-de-pasajeros",
     label: "Aguada de Pasajeros",
-    price: formatPrice(30)
+    price: formatPrice(18)
   },
   {
     value: "cruces",
     label: "Cruces",
-    price: formatPrice(50),
+    price: formatPrice(10),
   },
   {
     value: "lajas",
     label: "Lajas",
-    price: formatPrice(40),
+    price: formatPrice(14),
   },
   {
     value: "cumanayagua",
     label: "Cumanayagua",
-    price: formatPrice(50),
+    price: formatPrice(10),
   },
 ]
 

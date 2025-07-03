@@ -28,13 +28,13 @@ export default function Page() {
   
   const deliveryPrices: Record<string, number> = {
     "cienfuegos": 0,
-    "palmira": 10,
-    "rodas": 30,
-    "abreus": 20,
-    "aguada-de-pasajeros": 30,
-    "cruces": 50,
-    "lajas": 40,
-    "cumanayagua": 50
+    "palmira": 5,
+    "rodas": 10,
+    "abreus": 10,
+    "aguada-de-pasajeros": 18,
+    "cruces": 10,
+    "lajas": 14,
+    "cumanayagua": 10
   }
   
   const delivery = selectedTown ? deliveryPrices[selectedTown] || 0 : 0;
@@ -57,7 +57,7 @@ export default function Page() {
     
     const message = `¡Hola! Quiero hacer un pedido:%0A%0A*Productos:*%0A${productsList}%0A%0A*Municipio de entrega:* ${selectedTown}%0A*Dirección:* ${address}%0A*Total productos:* ${formatPrice(totalPrice)}%0A*Envío:* ${formatPrice(delivery)}%0A*Total a pagar:* ${formatPrice(totalPrice + delivery)}`
     
-    window.open(`https://wa.me/5353811810?text=${message}`, '_blank')
+    window.open(`https://wa.me/5358527122?text=${message}`, '_blank')
     router.push('/success')
     removeAll()
   }

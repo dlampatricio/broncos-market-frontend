@@ -12,6 +12,9 @@ export type ProductType = {
       medium: {
         url: string;
       }
+      small: {
+        url: string;
+      }
     }
   }[];
   category: {
