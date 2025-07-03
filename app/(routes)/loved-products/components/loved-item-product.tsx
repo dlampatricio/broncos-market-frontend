@@ -7,6 +7,7 @@ import { formatPrice } from "@/lib/format-price";
 import { cn } from "@/lib/utils";
 import { ProductType } from "@/types/product";
 import { X } from "lucide-react";
+import Link from "next/link";
 
 interface LovedItemProductProps {
   product: ProductType;
@@ -21,11 +22,13 @@ const LovedItemProduct = (props: LovedItemProductProps) => {
     <li className="flex p-4 bg-white rounded-lg shadow-sm dark:bg-card">
       {/* Contenedor de imagen */}
       <div className="relative pt-3 flex-shrink-0 w-40 h-27 overflow-hidden rounded-md">
-        <ProductImageMiniature 
-          slug={product.slug} 
-          url={product.images[0].formats.medium.url}
-          className="w-full h-full"
-        />
+        <Link href={`/product/${product.slug}`}>
+          <ProductImageMiniature 
+            slug={product.slug} 
+            url={product.images[0].formats.medium.url}
+            className="w-full h-full"
+          />
+        </Link>
       </div>
       
       <div className="flex flex-col flex-1 ml-4">
