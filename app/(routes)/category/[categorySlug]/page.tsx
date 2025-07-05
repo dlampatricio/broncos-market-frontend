@@ -16,6 +16,15 @@ export default function Page() {
   const categoryName = result?.[0]?.category?.categoryName || 
     categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1).toLowerCase();
 
+  // Filtrar productos que tienen imágenes (al menos un formato con URL)
+  const productsWithImages = result?.filter((product: ProductType) => 
+    product.images && product.images.length > 0 && 
+    product.images.some(img => 
+      img.formats?.medium?.url || 
+      img.formats?.small?.url
+    )
+  ) || [];
+
   return (
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
       <h1 className="text-3xl font-medium text-center">{categoryName}</h1>
@@ -29,7 +38,7 @@ export default function Page() {
               <SkeletonSchema grid={1} variant="product" />
             </div>
           ))
-        ) : !result || result.length === 0 ? (
+        ) : !result || productsWithImages.length === 0 ? (
           <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -49,11 +58,11 @@ export default function Page() {
               No hay productos disponibles
             </h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Actualmente no tenemos productos en esta categoría. Prueba con otra categoría.
+              Actualmente no tenemos productos con imágenes en esta categoría.
             </p>
           </div>
         ) : (
-          result.map((product: ProductType) => (
+          productsWithImages.map((product: ProductType) => (
             <ProductCard key={product.id} product={product} />
           ))
         )}

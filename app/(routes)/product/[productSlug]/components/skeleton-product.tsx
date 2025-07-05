@@ -13,7 +13,6 @@ const SkeletonProduct = () => {
         <div className="space-y-4">
           <div className="flex justify-between">
             <Skeleton className="h-8 w-[200px]" />
-            <Skeleton className="h-6 w-[100px]" />
           </div>
           
           <Skeleton className="h-4 w-full" />

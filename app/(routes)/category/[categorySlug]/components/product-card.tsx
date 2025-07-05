@@ -29,7 +29,7 @@ const ProductCard = (props: ProductCardProps) => {
                       router.push(`/product/${product.slug}`);
                     }}>
                 <img 
-                  src={image.formats.small.url}
+                  src={image.formats.medium.url}
                   alt={product.productName}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
