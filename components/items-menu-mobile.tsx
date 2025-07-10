@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, ShoppingCart, Heart, User, Sun, Moon, Home, Info, Phone, BaggageClaim } from "lucide-react";
+import { Menu, ShoppingCart, Heart, /*User ,*/ Sun, Moon, Home, Info, /*Phone ,*/ BaggageClaim } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -145,6 +145,7 @@ const ItemsMenuMobile = () => {
             { href: "/category/bebidas", text: "Bebidas" },
             { href: "/category/confituras", text: "Confituras" },
             { href: "/category/otros", text: "Otros" },
+            { href: "/all-products", text: "Todos los Productos" },
           ].map((item) => (
             <ListItem
               key={item.href}
@@ -250,7 +251,7 @@ const ItemsMenuMobile = () => {
           </ListItem>
 
           {/* Perfil de usuario */}
-          <ListItem
+          {/* <ListItem
             onClick={() => {
               router.push("/user");
               toggleDrawer(false)();
@@ -272,7 +273,7 @@ const ItemsMenuMobile = () => {
                 color: currentTheme === "dark" ? "#e5e5e5" : "#333333"
               }} 
             />
-          </ListItem>
+          </ListItem> */}
 
           {/* Tema oscuro/claro */}
           <ListItem 
@@ -327,7 +328,7 @@ const ItemsMenuMobile = () => {
         <List>
           <ListItem
             component={Link}
-            href="/about"
+            href="/about-us"
             onClick={toggleDrawer(false)}
             sx={{ 
               "&:hover": { 
@@ -347,7 +348,7 @@ const ItemsMenuMobile = () => {
               }} 
             />
           </ListItem>
-          <ListItem
+          {/* <ListItem
             component={Link}
             href="/contact"
             onClick={toggleDrawer(false)}
@@ -368,7 +369,7 @@ const ItemsMenuMobile = () => {
                 color: currentTheme === "dark" ? "#e5e5e5" : "#333333"
               }} 
             />
-          </ListItem>
+          </ListItem> */}
         </List>
       </Drawer>
     </Box>

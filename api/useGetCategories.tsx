@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 export function useGetCategories() {
-  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories?populate=*&sort=slug:asc`
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories?populate=*&sort=slug:asc&pagination[limit]=1000`
 
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(true)

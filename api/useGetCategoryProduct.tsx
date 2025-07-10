@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 export default function useGetCategoryProduct(slug: string | string[] | undefined) {
-  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products?populate=*&filters[category][slug][$eq]=${slug}`
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products?populate=*&filters[category][slug][$eq]=${slug}&sort=productName:asc&pagination[limit]=1000`
   
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(true)

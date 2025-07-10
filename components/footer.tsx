@@ -5,23 +5,23 @@ const dataFooter = [
   {
     id: 1,
     name: "Sobre Nosotros",
-    link: "#",
+    link: "/about-us",
   },
   {
     id: 2,
     name: "Productos",
-    link: "#",
+    link: "/all-products",
   },
-  {
-    id: 3,
-    name: "Mi Cuenta",
-    link: "#",
-  },
-  {
-    id: 4,
-    name: "Política de Privacidad",
-    link: "#",
-  },
+  // {
+  //   id: 3,
+  //   name: "Mi Cuenta",
+  //   link: "#",
+  // },
+  // {
+  //   id: 4,
+  //   name: "Política de Privacidad",
+  //   link: "#",
+  // },
 ]
 
 const Footer = () => {
@@ -46,7 +46,7 @@ const Footer = () => {
         <Separator className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"/>
         <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
           &copy; 2025
-          <Link href="#" className="hover:underline"> dlampatricio </Link>
+          <Link href="#" className="hover:underline"> Bronco&apos;s Market </Link>
           Todos los derechos reservados
         </span>
       </div>

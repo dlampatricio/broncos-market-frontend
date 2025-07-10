@@ -1,6 +1,6 @@
 "use client"
 
-import { BaggageClaim, Heart, ShoppingCart, User } from "lucide-react";
+import { BaggageClaim, Heart, Search, ShoppingCart, /*User*/ } from "lucide-react";
 import { useRouter } from "next/navigation";
 import MenuList from "./menu-list";
 import ItemsMenuMobile from "./items-menu-mobile";
@@ -28,7 +28,11 @@ const NavBar = () => {
 
       {/* Contenido para mobile */}
       <div className="flex items-center sm:hidden gap-4">
-        {/* Solo mostrar carrito en mobile */}
+        <Search 
+          strokeWidth="1" 
+          className="w-6 h-6 cursor-pointer" 
+          onClick={() => router.push("/all-products")}
+        />
         {cart.items.length === 0 ? (
           <ShoppingCart 
             strokeWidth="1" 
@@ -50,7 +54,12 @@ const NavBar = () => {
       </div>
 
       {/* Contenido para desktop (oculto en mobile) */}
-      <div className="items-center justify-between hidden sm:flex gap-7 pl-2">
+      <div className="items-center justify-between hidden sm:flex gap-7">
+        <Search 
+          strokeWidth="1" 
+          className="w-6 h-6 cursor-pointer" 
+          onClick={() => router.push("/all-products")}
+        />
         {cart.items.length === 0 ? (
           <ShoppingCart 
             strokeWidth="1" 
@@ -70,11 +79,6 @@ const NavBar = () => {
           strokeWidth="1" 
           className={`w-6 h-6 cursor-pointer ${lovedItems.length > 0 && 'fill-black dark:fill-white'}`} 
           onClick={() => router.push("/loved-products")}
-        />
-        <User 
-          strokeWidth="1" 
-          className="w-6 h-6 cursor-pointer" 
-          onClick={() => router.push("/user")}
         />
         <ToggleTheme />
       </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 
 export default function useGetProductField() {
- const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/content-type-builder/content-types/api::product.product`
+ const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/content-type-builder/content-types/api::product.product&pagination[limit]=1000`
   
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(true)

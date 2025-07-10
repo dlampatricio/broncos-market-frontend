@@ -18,7 +18,7 @@ const MenuList = () => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Productos</NavigationMenuTrigger>
+          <NavigationMenuTrigger>Categorías</NavigationMenuTrigger>
           <NavigationMenuContent className="z-50">
             <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {components.map((component) => (
@@ -33,7 +33,7 @@ const MenuList = () => {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenuItem>
+        {/* <NavigationMenuItem>
           <NavigationMenuTrigger>Sobre Nosotros</NavigationMenuTrigger>
           <NavigationMenuContent className="z-50">
             <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
@@ -60,7 +60,7 @@ const MenuList = () => {
               </ListItem>
             </ul>
           </NavigationMenuContent>
-        </NavigationMenuItem>
+        </NavigationMenuItem> */}
       </NavigationMenuList>
     </NavigationMenu>
   )
@@ -73,36 +73,36 @@ const components: { title: string; href: string; description: string }[] = [
     title: "Combos",
     href: "/category/combos",
     description:
-      "Paquetes completos y económicos, diseñados para satisfacer todas tus necesidades en una sola compra. Ideales para familias, eventos o ahorrar tiempo y dinero.",
+      "Paquetes completos y económicos para todas tus necesidades.",
   },
   {
     title: "Lácteos",
     href: "/category/lacteos",
     description:
-      "Productos frescos y esenciales como quesos, leche, mantequilla y más. Nutrición y sabor en cada opción, perfectos para tu dieta diaria.",
+     "Quesos, leche, mantequilla y más. Nutrición y sabor en cada opción.",
   },
   {
     title: "Cárnicos",
     href: "/category/carnicos",
     description:
-      "Cortes selectos de carne de cerdo, pollo, res y embutidos de alta calidad. Frescura garantizada para tus comidas favoritas.",
+      "Cortes selectos de carne de cerdo, pollo, res y embutidos.",
   },
   {
     title: "Bebidas",
     href: "/category/bebidas",
-    description: "Refrescos, jugos, café y otras bebidas para hidratarte y disfrutar en cualquier momento. ¡Frías o calientes, siempre deliciosas!",
+    description: "Refrescos, jugos, café y otras bebidas para hidratarte.",
   },
   {
     title: "Confituras",
     href: "/category/confituras",
     description:
-      "Dulces, azúcar, leche condensada y otros productos para endulzar tu día. Postres, meriendas y antojos cubiertos con calidad.",
+      "Dulces, azúcar y productos para endulzar tu día.",
   },
   {
     title: "Otros",
     href: "/category/otros",
     description:
-      "Aceites, pastas, condimentos y artículos variados para complementar tu despensa. Todo lo que necesitas en un solo lugar.",
+      "Aceites, pastas, condimentos y artículos variados.",
   },
 ]
 
