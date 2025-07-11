@@ -49,13 +49,13 @@ const CartItem = ({ product, quantity, onQuantityChange }: CartItemProps) => {
         <div className="flex justify-between">
           <div>
             <h2 className="font-bold line-clamp-1">{product.productName}</h2>
-            <div className="flex items-baseline gap-2">
+            <div className="flex flex-col">
               <p className="font-bold text-primary">
                 {formatPrice(product.price * quantity)}
               </p>
               {quantity > product.min && (
                 <span className="text-sm text-muted-foreground">
-                  ({formatPrice(product.price)} c/u)
+                  {formatPrice(product.price)} c/u
                 </span>
               )}
             </div>

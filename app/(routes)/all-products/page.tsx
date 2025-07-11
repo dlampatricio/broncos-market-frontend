@@ -75,7 +75,7 @@ export default function Page() {
       <div className="pt-8 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {loading || searchLoading ? (
           Array.from({ length: 6 }).map((_, index) => (
-            <div key={index} className="flex justify-center">
+            <div key={index}>
               <SkeletonSchema grid={1} variant="product" />
             </div>
           ))
