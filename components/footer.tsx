@@ -1,3 +1,5 @@
+'use client'
+
 import Link from "next/link";
 import { Separator } from "./ui/separator";
 
@@ -12,46 +14,47 @@ const dataFooter = [
     name: "Productos",
     link: "/all-products",
   },
-  // {
-  //   id: 3,
-  //   name: "Mi Cuenta",
-  //   link: "#",
-  // },
-  // {
-  //   id: 4,
-  //   name: "Política de Privacidad",
-  //   link: "#",
-  // },
 ]
 
 const Footer = () => {
   return ( 
-    <footer className="mt-4">
+    <footer className="mt-4 bg-red-50 dark:bg-neutral-950">
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
-          <p>
-            <span className="font-bold">
-              Bronco&apos;s Market&nbsp;
-            </span>
+            <p className="text-gray-600 dark:text-gray-400"> 
+              <span className="text-lg font-semibold text-red-900 dark:text-red-500 mr-2">
+                Bronco&apos;s Market  
+              </span>
               E-commerce
-          </p>
-          <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+            </p>         
+          <ul className="flex flex-wrap gap-6 text-sm font-medium">
             {dataFooter.map((data) => (
               <li key={data.id}>
-                <Link href={data.link} className="hover:underline me-4 md:me-6">{data.name}</Link>
+                <Link 
+                  href={data.link} 
+                  className="text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 transition-colors"
+                >
+                  {data.name}
+                </Link>
               </li>
-          ))}
+            ))}
           </ul>
         </div>
-        <Separator className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"/>
-        <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
-          &copy; 2025
-          <Link href="#" className="hover:underline"> Bronco&apos;s Market </Link>
-          Todos los derechos reservados
-        </span>
+        
+        <Separator className="my-3 border-gray-300 dark:border-gray-700" />
+        
+        <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+          <span>
+            &copy; 2025{" "}
+            <Link href="/" className="text-red-900 hover:underline dark:text-red-500">
+              Bronco&apos;s Market
+            </Link>
+            . Todos los derechos reservados
+          </span>
+        </div>
       </div>
     </footer>
    );
 }
  
-export default Footer
+export default Footer;
