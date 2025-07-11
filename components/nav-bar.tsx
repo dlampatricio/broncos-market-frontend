@@ -1,6 +1,6 @@
 "use client"
 
-import { BaggageClaim, Heart, Search, ShoppingCart, /*User*/ } from "lucide-react";
+import { BaggageClaim, Heart, Search, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import MenuList from "./menu-list";
 import ItemsMenuMobile from "./items-menu-mobile";
@@ -14,11 +14,14 @@ const NavBar = () => {
   const { lovedItems } = useLovedProducts()
 
   return (
-    <div className="flex items-center justify-between p-4 mx-auto sm:max-w-4xl md:max-w-6xl">
+    <div className="flex items-center justify-between p-4 mx-auto max-w-screen-xl border-b">
       {/* Logo */}
-      <h1 className="text-3xl cursor-pointer" onClick={() => router.push("/")}>
-        <span className="font-bold">Bronco&apos;s </span>
-        Market
+      <h1 
+        className="text-2xl cursor-pointer text-red-900 dark:text-red-500"
+        onClick={() => router.push("/")}
+      >
+        <span className="font-bold">Bronco&apos;s</span>
+        <span className="ml-2">Market</span>
       </h1>
 
       {/* Menú para desktop (oculto en mobile) */}
@@ -26,61 +29,65 @@ const NavBar = () => {
         <MenuList/>
       </div>
 
-      {/* Contenido para mobile */}
-      <div className="flex items-center sm:hidden gap-4">
-        <Search 
-          strokeWidth="1" 
-          className="w-6 h-6 cursor-pointer" 
-          onClick={() => router.push("/all-products")}
-        />
-        {cart.items.length === 0 ? (
-          <ShoppingCart 
-            strokeWidth="1" 
-            className="w-6 h-6" 
-            onClick={() => router.push("/cart")}
+      {/* Iconos de navegación */}
+      <div className="flex items-center gap-4">
+        {/* Contenido para desktop (oculto en mobile) */}
+        <div className="items-center hidden sm:flex gap-5">
+          <Search 
+            strokeWidth="1.5" 
+            className="w-5 h-5 cursor-pointer text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 transition-colors" 
+            onClick={() => router.push("/all-products")}
           />
-        ) : (
-          <div 
-            className="flex items-center gap-1" 
-            onClick={() => router.push("/cart")}
-          >
-            <BaggageClaim strokeWidth={1} className="w-6 h-6" />
-            <span className="text-sm">{cart.items.length}</span>
-          </div>
-        )}
-        
-        {/* Menú mobile */}
-        <ItemsMenuMobile />
-      </div>
+          {cart.items.length === 0 ? (
+            <ShoppingCart 
+              strokeWidth="1.5" 
+              className="w-5 h-5 cursor-pointer text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 transition-colors" 
+              onClick={() => router.push("/cart")}
+            />
+          ) : (
+            <div 
+              className="flex items-center gap-1 cursor-pointer" 
+              onClick={() => router.push("/cart")}
+            >
+              <BaggageClaim 
+                strokeWidth="1.5" 
+                className="w-5 h-5 text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 transition-colors" 
+              />
+              <span className="text-sm text-red-900 dark:text-red-500">{cart.items.length}</span>
+            </div>
+          )}
+          <Heart 
+            strokeWidth="1.5" 
+            className={`w-5 h-5 cursor-pointer text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 transition-colors ${lovedItems.length > 0 && 'fill-current'}`} 
+            onClick={() => router.push("/loved-products")}
+          />
+          <ToggleTheme />
+        </div>
 
-      {/* Contenido para desktop (oculto en mobile) */}
-      <div className="items-center justify-between hidden sm:flex gap-7">
-        <Search 
-          strokeWidth="1" 
-          className="w-6 h-6 cursor-pointer" 
-          onClick={() => router.push("/all-products")}
-        />
-        {cart.items.length === 0 ? (
-          <ShoppingCart 
-            strokeWidth="1" 
-            className="w-6 h-6 cursor-pointer" 
-            onClick={() => router.push("/cart")}
+        {/* Contenido para mobile */}
+        <div className="flex items-center sm:hidden gap-4">
+          <Search 
+            strokeWidth="1.5" 
+            className="w-5 h-5 cursor-pointer text-red-900 dark:text-red-500" 
+            onClick={() => router.push("/all-products")}
           />
-        ) : (
-          <div 
-            className="flex items-center gap-1 cursor-pointer" 
-            onClick={() => router.push("/cart")}
-          >
-            <BaggageClaim strokeWidth={1} className="w-6 h-6" />
-            <span>{cart.items.length}</span>
-          </div>
-        )}
-        <Heart 
-          strokeWidth="1" 
-          className={`w-6 h-6 cursor-pointer ${lovedItems.length > 0 && 'fill-black dark:fill-white'}`} 
-          onClick={() => router.push("/loved-products")}
-        />
-        <ToggleTheme />
+          {cart.items.length === 0 ? (
+            <ShoppingCart 
+              strokeWidth="1.5" 
+              className="w-5 h-5 text-red-900 dark:text-red-500" 
+              onClick={() => router.push("/cart")}
+            />
+          ) : (
+            <div 
+              className="flex items-center gap-1" 
+              onClick={() => router.push("/cart")}
+            >
+              <BaggageClaim strokeWidth={1.5} className="w-5 h-5 text-red-900 dark:text-red-500" />
+              <span className="text-sm text-red-900 dark:text-red-500">{cart.items.length}</span>
+            </div>
+          )}
+          <ItemsMenuMobile />
+        </div>
       </div>
     </div>
   )

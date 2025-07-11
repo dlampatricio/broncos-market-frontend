@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Menu, ShoppingCart, Heart, /*User ,*/ Sun, Moon, Home, Info, /*Phone ,*/ BaggageClaim } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react"
+import { Menu, ShoppingCart, Heart, Sun, Moon, Home, Info, BaggageClaim } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import {
   Drawer,
   List,
@@ -15,39 +15,57 @@ import {
   Divider,
   Typography,
   Switch,
-} from "@mui/material";
-import { useTheme } from "next-themes";
-import { useCart } from "@/hooks/use-cart";
-import { useLovedProducts } from "@/hooks/use-loved-products";
+} from "@mui/material"
+import { useTheme } from "next-themes"
+import { useCart } from "@/hooks/use-cart"
+import { useLovedProducts } from "@/hooks/use-loved-products"
 
 const ItemsMenuMobile = () => {
-  const [open, setOpen] = useState(false);
-  const router = useRouter();
-  const { systemTheme, theme, setTheme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
-  const cart = useCart();
-  const { lovedItems } = useLovedProducts();
+  const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const router = useRouter()
+  const { systemTheme, theme, setTheme } = useTheme()
+  const currentTheme = theme === "system" ? systemTheme : theme
+  const cart = useCart()
+  const { lovedItems } = useLovedProducts()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const toggleDrawer = (isOpen: boolean) => () => {
-    setOpen(isOpen);
-  };
+    setOpen(isOpen)
+  }
 
-  const getIconColor = () => {
-    return currentTheme === "dark" ? "#ffffff" : "#000000";
-  };
+  if (!mounted) {
+    return (
+      <IconButton 
+        sx={{
+          color: "#dc2626",
+          "&:hover": {
+            backgroundColor: "transparent",
+            opacity: 0.8
+          }
+        }}
+      >
+        <Menu className="w-6 h-6 text-red-900" />
+      </IconButton>
+    )
+  }
 
   return (
     <Box>
       <IconButton 
-        onClick={toggleDrawer(true)} 
-        sx={{ 
-          color: "inherit",
+        onClick={toggleDrawer(true)}
+        sx={{
+          color: currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626",
           "&:hover": {
-            backgroundColor: "transparent"
+            backgroundColor: "transparent",
+            opacity: 0.8
           }
         }}
       >
-        <Menu className="w-6 h-6" />
+        <Menu className="w-6 h-6 text-red-900 dark:text-red-500" />
       </IconButton>
 
       <Drawer
@@ -58,30 +76,24 @@ const ItemsMenuMobile = () => {
         PaperProps={{
           sx: { 
             width: "300px",
-            backgroundColor: currentTheme === "dark" ? "rgb(17 24 39)" : "#ffffff",
-            transition: "background-color 0.3s ease",
+            backgroundColor: currentTheme === "dark" ? "rgb(23 23 23)" : "#ffffff",
+            borderLeft: currentTheme === "dark" ? "1px solid rgb(34 35 35)" : "1px solid #e5e7eb"
           }
         }}
       >
-        {/* Encabezado con logo */}
+        {/* Encabezado */}
         <Box sx={{ 
           p: 3, 
           textAlign: "center",
-          borderBottom: "1px solid",
-          borderColor: "divider"
+          borderBottom: currentTheme === "dark" ? "1px solid rgb(34 35 35)" : "1px solid #e5e7eb"
         }}>
           <Typography 
             variant="h6" 
             component="div"
             sx={{
               fontWeight: 700,
-              color: currentTheme === "dark" ? "#ffffff" : "#000000",
-              letterSpacing: "0.5px",
-              background: currentTheme === "dark" 
-                ? "linear-gradient(to right, #fecaca, #f87171)" 
-                : "linear-gradient(to right, #881313, #dc2626)",
-              backgroundClip: "text",
-              textFillColor: "transparent"
+              color: currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626",
+              letterSpacing: "0.5px"
             }}
           >
             BRONCO&apos;S MARKET
@@ -90,15 +102,15 @@ const ItemsMenuMobile = () => {
             variant="caption" 
             component="div"
             sx={{
-              color: currentTheme === "dark" ? "#d1d5db" : "#4b5563",
+              color: currentTheme === "dark" ? "#9ca3af" : "#6b7280",
               mt: 0.5
             }}
           >
-            Lo esencial llega a tu puerta, sin complicaciones
+            Lo esencial llega a tu puerta
           </Typography>
         </Box>
 
-        {/* Sección principal del menú */}
+        {/* Menú principal */}
         <List sx={{ py: 0 }}>
           <ListItem
             component={Link}
@@ -106,20 +118,19 @@ const ItemsMenuMobile = () => {
             onClick={toggleDrawer(false)}
             sx={{ 
               "&:hover": { 
-                bgcolor: currentTheme === "dark" ? "rgba(136, 19, 19, 0.2)" : "rgba(254, 202, 202, 0.5)" 
+                backgroundColor: currentTheme === "dark" ? "rgba(239, 68, 68, 0.1)" : "rgba(220, 38, 38, 0.05)" 
               },
-              borderBottom: "1px solid",
-              borderColor: "divider"
+              borderBottom: currentTheme === "dark" ? "1px solid rgb(34 35 35)" : "1px solid #e5e7eb"
             }}
           >
             <ListItemIcon sx={{ minWidth: "36px" }}>
-              <Home size={20} color={getIconColor()} />
+              <Home size={20} color={currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626"} />
             </ListItemIcon>
             <ListItemText 
               primary="Inicio" 
               primaryTypographyProps={{ 
                 fontWeight: 500,
-                color: currentTheme === "dark" ? "#f5f5f5" : "#333333"
+                color: currentTheme === "dark" ? "#f3f4f6" : "#111827"
               }} 
             />
           </ListItem>
@@ -131,7 +142,7 @@ const ItemsMenuMobile = () => {
               px: 2, 
               pt: 2, 
               pb: 1,
-              color: currentTheme === "dark" ? "#fecaca" : "#881313",
+              color: currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626",
               fontWeight: 600
             }}
           >
@@ -154,7 +165,7 @@ const ItemsMenuMobile = () => {
               onClick={toggleDrawer(false)}
               sx={{ 
                 "&:hover": { 
-                  bgcolor: currentTheme === "dark" ? "rgba(136, 19, 19, 0.2)" : "rgba(254, 202, 202, 0.5)" 
+                  backgroundColor: currentTheme === "dark" ? "rgba(239, 68, 68, 0.1)" : "rgba(220, 38, 38, 0.05)" 
                 },
                 py: 1.5
               }}
@@ -163,26 +174,29 @@ const ItemsMenuMobile = () => {
                 primary={item.text} 
                 primaryTypographyProps={{ 
                   fontWeight: 500,
-                  color: currentTheme === "dark" ? "#e5e5e5" : "#333333"
+                  color: currentTheme === "dark" ? "#e5e7eb" : "#374151"
                 }} 
               />
             </ListItem>
           ))}
         </List>
 
-        <Divider sx={{ my: 1 }} />
+        <Divider sx={{ 
+          my: 1,
+          borderColor: currentTheme === "dark" ? "rgb(34 35 35)" : "#e5e7eb" 
+        }} />
 
-        {/* Sección de acciones del usuario */}
+        {/* Acciones del usuario */}
         <List>
           {/* Carrito */}
           <ListItem
             onClick={() => {
-              router.push("/cart");
-              toggleDrawer(false)();
+              router.push("/cart")
+              toggleDrawer(false)()
             }}
             sx={{ 
               "&:hover": { 
-                bgcolor: currentTheme === "dark" ? "rgba(136, 19, 19, 0.2)" : "rgba(254, 202, 202, 0.5)" 
+                backgroundColor: currentTheme === "dark" ? "rgba(239, 68, 68, 0.1)" : "rgba(220, 38, 38, 0.05)" 
               },
               py: 1.5,
               position: "relative"
@@ -190,16 +204,16 @@ const ItemsMenuMobile = () => {
           >
             <ListItemIcon sx={{ minWidth: "36px" }}>
               {cart.items.length > 0 ? (
-                <BaggageClaim size={20} color={getIconColor()} />
+                <BaggageClaim size={20} color={currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626"} />
               ) : (
-                <ShoppingCart size={20} color={getIconColor()} />
+                <ShoppingCart size={20} color={currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626"} />
               )}
             </ListItemIcon>
             <ListItemText 
               primary="Carrito" 
               primaryTypographyProps={{ 
                 fontWeight: 500,
-                color: currentTheme === "dark" ? "#e5e5e5" : "#333333"
+                color: currentTheme === "dark" ? "#f3f4f6" : "#111827"
               }} 
             />
             {cart.items.length > 0 && (
@@ -224,12 +238,12 @@ const ItemsMenuMobile = () => {
           {/* Favoritos */}
           <ListItem
             onClick={() => {
-              router.push("/loved-products");
-              toggleDrawer(false)();
+              router.push("/loved-products")
+              toggleDrawer(false)()
             }}
             sx={{ 
               "&:hover": { 
-                bgcolor: currentTheme === "dark" ? "rgba(136, 19, 19, 0.2)" : "rgba(254, 202, 202, 0.5)" 
+                backgroundColor: currentTheme === "dark" ? "rgba(239, 68, 68, 0.1)" : "rgba(220, 38, 38, 0.05)" 
               },
               py: 1.5
             }}
@@ -237,45 +251,20 @@ const ItemsMenuMobile = () => {
             <ListItemIcon sx={{ minWidth: "36px" }}>
               <Heart 
                 size={20} 
-                color={getIconColor()} 
-                fill={lovedItems.length > 0 ? getIconColor() : "none"}
+                color={currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626"} 
+                fill={lovedItems.length > 0 ? (currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626") : "none"}
               />
             </ListItemIcon>
             <ListItemText 
               primary="Favoritos" 
               primaryTypographyProps={{ 
                 fontWeight: 500,
-                color: currentTheme === "dark" ? "#e5e5e5" : "#333333"
+                color: currentTheme === "dark" ? "#f3f4f6" : "#111827"
               }} 
             />
           </ListItem>
 
-          {/* Perfil de usuario */}
-          {/* <ListItem
-            onClick={() => {
-              router.push("/user");
-              toggleDrawer(false)();
-            }}
-            sx={{ 
-              "&:hover": { 
-                bgcolor: currentTheme === "dark" ? "rgba(136, 19, 19, 0.2)" : "rgba(254, 202, 202, 0.5)" 
-              },
-              py: 1.5
-            }}
-          >
-            <ListItemIcon sx={{ minWidth: "36px" }}>
-              <User size={20} color={getIconColor()} />
-            </ListItemIcon>
-            <ListItemText 
-              primary="Mi cuenta" 
-              primaryTypographyProps={{ 
-                fontWeight: 500,
-                color: currentTheme === "dark" ? "#e5e5e5" : "#333333"
-              }} 
-            />
-          </ListItem> */}
-
-          {/* Tema oscuro/claro */}
+          {/* Toggle de tema */}
           <ListItem 
             sx={{ 
               display: "flex", 
@@ -287,16 +276,16 @@ const ItemsMenuMobile = () => {
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <ListItemIcon sx={{ minWidth: "36px" }}>
                 {currentTheme === "dark" ? (
-                  <Moon size={20} color={getIconColor()} />
+                  <Moon size={20} color="rgb(251 44 54)" />
                 ) : (
-                  <Sun size={20} color={getIconColor()} />
+                  <Sun size={20} color="#dc2626" />
                 )}
               </ListItemIcon>
               <ListItemText 
                 primary={currentTheme === "dark" ? "Modo oscuro" : "Modo claro"} 
                 primaryTypographyProps={{ 
                   fontWeight: 500,
-                  color: currentTheme === "dark" ? "#e5e5e5" : "#333333"
+                  color: currentTheme === "dark" ? "#f3f4f6" : "#111827"
                 }} 
               />
             </Box>
@@ -306,25 +295,22 @@ const ItemsMenuMobile = () => {
               color="default"
               sx={{
                 '& .MuiSwitch-switchBase': {
-                  color: currentTheme === "dark" ? "#fecaca" : "#881313",
+                  color: currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626",
                 },
                 '& .MuiSwitch-track': {
-                  backgroundColor: currentTheme === "dark" ? "#fecaca" : "#881313",
-                },
-                '& .Mui-checked': {
-                  color: currentTheme === "dark" ? "#fecaca" : "#881313",
-                },
-                '& .Mui-checked + .MuiSwitch-track': {
-                  backgroundColor: currentTheme === "dark" ? "#fecaca" : "#881313",
+                  backgroundColor: currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626",
                 },
               }}
             />
           </ListItem>
         </List>
 
-        <Divider sx={{ my: 1 }} />
+        <Divider sx={{ 
+          my: 1,
+          borderColor: currentTheme === "dark" ? "rgb(34 35 35)" : "#e5e7eb" 
+        }} />
 
-        {/* Sección de información */}
+        {/* Información */}
         <List>
           <ListItem
             component={Link}
@@ -332,48 +318,26 @@ const ItemsMenuMobile = () => {
             onClick={toggleDrawer(false)}
             sx={{ 
               "&:hover": { 
-                bgcolor: currentTheme === "dark" ? "rgba(136, 19, 19, 0.2)" : "rgba(254, 202, 202, 0.5)" 
+                backgroundColor: currentTheme === "dark" ? "rgba(239, 68, 68, 0.1)" : "rgba(220, 38, 38, 0.05)" 
               },
               py: 1.5
             }}
           >
             <ListItemIcon sx={{ minWidth: "36px" }}>
-              <Info size={20} color={getIconColor()} />
+              <Info size={20} color={currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626"} />
             </ListItemIcon>
             <ListItemText 
               primary="Sobre nosotros" 
               primaryTypographyProps={{ 
                 fontWeight: 500,
-                color: currentTheme === "dark" ? "#e5e5e5" : "#333333"
+                color: currentTheme === "dark" ? "#f3f4f6" : "#111827"
               }} 
             />
           </ListItem>
-          {/* <ListItem
-            component={Link}
-            href="/contact"
-            onClick={toggleDrawer(false)}
-            sx={{ 
-              "&:hover": { 
-                bgcolor: currentTheme === "dark" ? "rgba(136, 19, 19, 0.2)" : "rgba(254, 202, 202, 0.5)" 
-              },
-              py: 1.5
-            }}
-          >
-            <ListItemIcon sx={{ minWidth: "36px" }}>
-              <Phone size={20} color={getIconColor()} />
-            </ListItemIcon>
-            <ListItemText 
-              primary="Contacto" 
-              primaryTypographyProps={{ 
-                fontWeight: 500,
-                color: currentTheme === "dark" ? "#e5e5e5" : "#333333"
-              }} 
-            />
-          </ListItem> */}
         </List>
       </Drawer>
     </Box>
-  );
-};
+  )
+}
 
-export default ItemsMenuMobile;
+export default ItemsMenuMobile
