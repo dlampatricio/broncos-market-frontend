@@ -19,7 +19,7 @@ const FeaturedProducts = () => {
 
   return (
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
-      <h3 className="text-3xl font-bold text-foreground mb-8 text-center sm:text-left">
+      <h3 className="text-red-900 dark:text-red-500 text-3xl font-bold mb-8 text-center">
         Productos Destacados
       </h3>
       

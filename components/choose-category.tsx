@@ -11,7 +11,7 @@ const ChooseCategory = () => {
 
   return (
     <div className="max-w-6xl px-4 py-8 mx-auto sm:py-12 sm:px-6 lg:px-8">
-      <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center sm:text-left">
+      <h3 className="text-3xl font-bold text-red-900 dark:text-red-500 mb-8 text-center">
         Elige Tu Categoría Favorita
       </h3>
       
