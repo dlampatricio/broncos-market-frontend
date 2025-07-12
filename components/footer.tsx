@@ -18,7 +18,7 @@ const dataFooter = [
 
 const Footer = () => {
   return ( 
-    <footer className="mt-4 bg-red-50 dark:bg-neutral-950">
+    <footer className="mt-4">
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
             <p className="text-gray-600 dark:text-gray-400"> 

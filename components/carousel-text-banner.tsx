@@ -30,7 +30,7 @@ export const dataCarouselTop = [
 const CarouselTextBanner = () => {
 
   return ( 
-    <div className="bg-gray-200 dark:bg-primary">
+    <div className="bg-cover bg-center bg-[url('/carousel.jpg')] dark:bg-[url('/dark-carousel.jpg')]">
       <Carousel className="w-full max-w-10xl mx-auto" plugins={[
         Autoplay({
           delay: 5000
@@ -42,8 +42,8 @@ const CarouselTextBanner = () => {
                 <div>
                   <Card className="shadow-none border-none bg-transparent">
                     <CardContent className="flex flex-col justify-center p-2 items-center text-center">
-                      <p className="sm:text-lg text-wrap dark:text-secondary">{title}</p>
-                      <p className="text-xs sm:text-sm text-wrap dark:text-secondary">{description}</p>
+                      <p className="text-white sm:text-lg text-wrap">{title}</p>
+                      <p className="text-white text-xs sm:text-sm text-wrap">{description}</p>
                     </CardContent>
                   </Card>
                 </div>
