@@ -7,7 +7,7 @@ export default function Page() {
 
   return (
     <div className="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
-      <h1 className="mb-8 text-3xl font-bold text-gray-900 dark:text-white">
+      <h1 className="mb-8 text-3xl font-bold dark:text-red-500 text-red-900">
         Productos que te gustan
       </h1>
       

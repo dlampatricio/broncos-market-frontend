@@ -43,17 +43,17 @@ export default function Page() {
     <div className="max-w-6xl py-4 mx-auto sm:py-16 px-4 sm:px-6">
       {/* Header con buscador */}
       <div className="flex flex-col gap-6 mb-8">
-        <h1 className="text-3xl font-medium text-center">Nuestros Productos</h1>
+        <h1 className="text-3xl font-medium text-center text-red-900 dark:text-red-500">Nuestros Productos</h1>
         
         {/* Buscador mejorado */}
         <div className="relative max-w-2xl w-full mx-auto">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 dark:text-red-500 text-red-900 transform -translate-y-1/2 h-5 w-5" />
             <Input
               placeholder="Buscar por nombre"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-10 h-12 text-base rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary/50 border-muted-foreground/30"
+              className="pl-10 pr-10 h-12 text-base rounded-lg shadow-sm focus:border-red-900 dark:focus:border-red-500 border-muted-foreground/30"
             />
             {searchQuery && (
               <Button

@@ -89,7 +89,7 @@ const FeaturedProducts = () => {
                         <p className="text-lg font-bold hover:text-primary transition-colors duration-200">
                           &quot;{product.productName}&quot;
                         </p>
-                        <p className="px-3 py-1 text-sm font-medium text-white bg-red-900 rounded-full">
+                        <p className="px-3 py-1 text-sm font-medium text-white bg-red-900 dark:bg-red-800 rounded-full">
                           {formatPrice(product.price)}
                         </p>
                       </div>

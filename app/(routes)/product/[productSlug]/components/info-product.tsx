@@ -42,8 +42,8 @@ const InfoProduct = (props: InfoProductProps) => {
         <Heart 
           width={30} 
           strokeWidth={1} 
-          className={`flex-shrink-0 transition duration-300 cursor-pointer ${
-            isLoved ? "fill-black dark:fill-white" : "hover:fill-black dark:hover:fill-white"
+          className={`flex-shrink-0 transition duration-300 cursor-pointer text-red-900 dark:text-red-500 ${
+            isLoved ? "fill-red-900 dark:fill-red-500" : "hover:fill-red-900 dark:hover:fill-red-500"
           }`} 
           onClick={handleLoveClick}
         />

@@ -16,12 +16,10 @@ export default function Page() {
   const [address, setAddress] = useState<string>("")
   const router = useRouter()
   
-  // Estado para manejar las cantidades de cada producto
   const [quantities, setQuantities] = useState<Record<string, number>>(
     items.reduce((acc, item) => ({ ...acc, [item.id]: 1 }), {}
   ))
 
-  // Calcular precios teniendo en cuenta las cantidades
   const totalPrice = items.reduce((total, product) => {
     return total + (product.price * (quantities[product.id] || 1))
   }, 0) 
@@ -39,7 +37,6 @@ export default function Page() {
   
   const delivery = selectedTown ? deliveryPrices[selectedTown] || 0 : 0;
 
-  // Función para actualizar la cantidad de un producto
   const handleQuantityChange = (productId: string, newQuantity: number) => {
     if (newQuantity >= 1) {
       setQuantities(prev => ({
@@ -62,18 +59,21 @@ export default function Page() {
     removeAll()
   }
 
-  // Calcular total de artículos (sumando cantidades)
   const totalItems = Object.values(quantities).reduce((total, qty) => total + qty, 0)
 
   return (
-    <div className="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
-      <h1 className="mb-8 text-3xl font-bold text-gray-900 dark:text-white">Carrito de Compra</h1>
-      
-      <div className="grid gap-8 lg:grid-cols-2">
+    <div className="max-w-4xl mx-auto px-4 py-12">
+      <section className="text-center mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-red-900 dark:text-red-500 mb-6">
+          Carrito de Compra
+        </h1>
+      </section>
+
+      <div className="grid md:grid-cols-2 gap-8">
         {/* Lista de productos */}
         <div className="space-y-6">
           {items.length === 0 ? (
-            <div className="p-6 text-center bg-white rounded-lg shadow-sm dark:bg-card">
+            <div className="p-6 text-center bg-gray-100 rounded-lg border border-red-100 dark:bg-card">
               <p className="text-gray-600 dark:text-gray-300">No hay productos en el carrito</p>
             </div>
           ) : (
@@ -92,9 +92,9 @@ export default function Page() {
         
         {/* Resumen de compra */}
         <div>
-          <div className="p-6 space-y-6 bg-white rounded-lg shadow-sm dark:bg-card">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Resumen del pedido</h2>
-            <Separator className="bg-gray-200 dark:bg-gray-700" />
+          <div className="p-6 space-y-6 bg-gray-100 rounded-lg border dark:bg-card">
+            <h2 className="text-xl font-semibold text-red-900 dark:text-red-500 text-center">Resumen del pedido</h2>
+            <Separator className="bg-red-900 dark:bg-red-500" />
             
             <div className="space-y-3">
               <div className="flex justify-between">
@@ -113,7 +113,7 @@ export default function Page() {
                 </span>
               </div>
               
-              <Separator className="bg-gray-200 dark:bg-gray-700" />
+              <Separator className="bg-red-900 dark:bg-red-500" />
               
               <div className="flex justify-between text-lg">
                 <span className="font-semibold text-gray-900 dark:text-white">Total</span>
@@ -141,12 +141,12 @@ export default function Page() {
                 placeholder="Calle, número, entre calles..."
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full"
+                className="w-full border-gray-300 focus:border-red-900 dark:focus:border-red-500"
               />
             </div>
 
             <Button 
-              className="w-full py-6 text-base font-medium shadow-md"
+              className="w-full py-6 text-base font-medium bg-red-900 hover:bg-red-800 text-white shadow-md transition"
               onClick={handleBuyClick}
               disabled={items.length === 0 || !selectedTown || !address}
             >
