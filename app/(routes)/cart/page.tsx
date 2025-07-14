@@ -14,6 +14,8 @@ export default function Page() {
   const { items, removeAll } = useCart()
   const [selectedTown, setSelectedTown] = useState<string>("")
   const [address, setAddress] = useState<string>("")
+  const [name, setName] = useState<string>("")
+  const [phone, setPhone] = useState<string>("")
   const router = useRouter()
   
   const [quantities, setQuantities] = useState<Record<string, number>>(
@@ -52,7 +54,7 @@ export default function Page() {
       return `- ${item.productName} (${formatPrice(item.price)} x ${quantity} = ${formatPrice(item.price * quantity)})`
     }).join('%0A')
     
-    const message = `¡Hola! Quiero hacer un pedido:%0A%0A*Productos:*%0A${productsList}%0A%0A*Municipio de entrega:* ${selectedTown}%0A*Dirección:* ${address}%0A*Total productos:* ${formatPrice(totalPrice)}%0A*Envío:* ${formatPrice(delivery)}%0A*Total a pagar:* ${formatPrice(totalPrice + delivery)}`
+    const message = `Nuevo pedido:%0A%0ANombre: ${name}%0ATeléfono: ${phone}%0A%0AProductos:%0A${productsList}%0A%0AMunicipio de entrega: ${selectedTown}%0ADirección: ${address}%0APrecio Productos: ${formatPrice(totalPrice)}%0APrecio Envío: ${formatPrice(delivery)}%0ATotal a Pagar: ${formatPrice(totalPrice + delivery)}`
     
     window.open(`https://wa.me/5358527122?text=${message}`, '_blank')
     router.push('/success')
@@ -123,32 +125,62 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="space-y-3 pt-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Municipio de entrega
-              </label>
-              <TownsCombobox 
-                selectedTown={selectedTown}
-                onTownSelect={setSelectedTown}
-              />
-            </div>
+            <div className="space-y-4 pt-2">
+              <div className="space-y-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Nombre completo
+                </label>
+                <Input
+                  placeholder="Tu nombre"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full border-gray-300 focus:border-red-900 dark:focus:border-red-500"
+                  required
+                />
+              </div>
 
-            <div className="space-y-3 pt-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Dirección exacta
-              </label>
-              <Input
-                placeholder="Calle, número, entre calles..."
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="w-full border-gray-300 focus:border-red-900 dark:focus:border-red-500"
-              />
+              <div className="space-y-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Número de teléfono
+                </label>
+                <Input
+                  placeholder="Tu teléfono"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full border-gray-300 focus:border-red-900 dark:focus:border-red-500"
+                  required
+                  type="tel"
+                />
+              </div>
+
+              <div className="space-y-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Municipio de entrega
+                </label>
+                <TownsCombobox 
+                  selectedTown={selectedTown}
+                  onTownSelect={setSelectedTown}
+                />
+              </div>
+
+              <div className="space-y-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Dirección exacta
+                </label>
+                <Input
+                  placeholder="Calle, número, entre calles..."
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  className="w-full border-gray-300 focus:border-red-900 dark:focus:border-red-500"
+                  required
+                />
+              </div>
             </div>
 
             <Button 
               className="w-full py-6 text-base font-medium bg-red-900 hover:bg-red-800 text-white shadow-md transition"
               onClick={handleBuyClick}
-              disabled={items.length === 0 || !selectedTown || !address}
+              disabled={items.length === 0 || !selectedTown || !address || !name || !phone}
             >
               Finalizar compra
             </Button>
