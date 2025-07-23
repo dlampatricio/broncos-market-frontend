@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Search, X } from "lucide-react";
 import useGetAllProducts from '@/api/useGetAllProducts';
 import ProductCard from '../category/[categorySlug]/components/product-card';
-import  useDebounce  from '@/hooks/use-debounce';
+import useDebounce from '@/hooks/use-debounce';
 import { Button } from '@/components/ui/button';
 
 export default function Page() {
@@ -71,6 +71,23 @@ export default function Page() {
       
       <Separator className="bg-muted-foreground/20" />
 
+      {/* Mensaje cuando no hay productos */}
+      {!loading && !searchLoading && (!displayedProducts || displayedProducts.length === 0) && (
+        <div className="col-span-full flex flex-col items-center justify-center py-16 text-center">
+          <div className="bg-muted/50 p-6 rounded-full mb-4">
+            <Search className="h-10 w-10 text-muted-foreground" strokeWidth={1.5} />
+          </div>
+          <h3 className="text-xl font-medium text-foreground mb-2">
+            {debouncedSearchQuery ? "No encontramos coincidencias" : "Catálogo vacío"}
+          </h3>
+          <p className="text-muted-foreground max-w-md">
+            {debouncedSearchQuery 
+              ? "Prueba con términos diferentes o más generales" 
+              : "Estamos trabajando para agregar nuevos productos pronto."}
+          </p>
+        </div>
+      )}
+
       {/* Grid de productos */}
       <div className="pt-8 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {loading || searchLoading ? (
@@ -79,23 +96,12 @@ export default function Page() {
               <SkeletonSchema grid={1} variant="product" />
             </div>
           ))
-        ) : !displayedProducts || displayedProducts.length === 0 ? (
-          <div className="col-span-full flex flex-col items-center justify-center py-16 text-center">
-            <div className="bg-muted/50 p-6 rounded-full mb-4">
-              <Search className="h-10 w-10 text-muted-foreground" strokeWidth={1.5} />
-            </div>
-            <h3 className="text-xl font-medium text-foreground mb-2">
-              {debouncedSearchQuery ? "No encontramos coincidencias" : "Catálogo vacío"}
-            </h3>
-            <p className="text-muted-foreground max-w-md">
-              {debouncedSearchQuery 
-                ? "Prueba con términos diferentes o más generales" 
-                : "Estamos trabajando para agregar nuevos productos pronto."}
-            </p>
-          </div>
         ) : (
           displayedProducts.map((product: ProductType) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+            />
           ))
         )}
       </div>
