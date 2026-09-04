@@ -74,18 +74,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </CarouselContent>
       </Carousel>
 
-      <div className="p-4 flex justify-between items-center">
+      <div className="p-4 flex flex-col gap-1">
         <h3
-          className={`text-lg font-medium transition-colors duration-200 ${
+          className={`text-sm sm:text-lg font-medium transition-colors duration-200 ${
             product.active ? "text-foreground group-hover:text-primary" : "text-foreground"
-          } line-clamp-1`}
+          }`}
         >
           {product.productName}
         </h3>
         <p
-          className={`text-lg font-bold ${
+          className={`text-sm sm:text-lg font-bold ${
             product.active ? "text-primary" : "text-foreground"
-          } ml-4`}
+          }`}
         >
           {formatPrice(product.price)}
         </p>

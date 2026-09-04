@@ -32,7 +32,7 @@ export default function CategoryPage() {
       </h1>
       <Separator />
 
-      <div className="pt-6 grid sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="pt-6 grid gap-4 sm:gap-6 grid-cols-2 lg:grid-cols-3">
         {isLoading
           ? Array.from({ length: 6 }).map((_, i) => (
               <div key={i}>

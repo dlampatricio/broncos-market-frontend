@@ -129,7 +129,7 @@ export default function AllProductsPage() {
         </div>
       )}
 
-      <div className="pt-8 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="pt-8 grid gap-4 sm:gap-6 grid-cols-2 lg:grid-cols-3">
         {loading
           ? Array.from({ length: 6 }).map((_, i) => (
               <div key={i}>
