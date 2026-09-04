@@ -6,9 +6,10 @@ import { Package, Tags, TrendingUp, Eye } from "lucide-react";
 import Link from "next/link";
 import type { ProductType } from "@/types/product";
 import SkeletonCard from "@/components/admin/skeleton-card";
+import { useAdminToken } from "@/hooks/use-admin-token";
 
 export default function AdminDashboard() {
-  const token = localStorage.getItem("admin_token") || "";
+  const token = useAdminToken();
   const { data: productsData, isLoading: loadingProducts } = useAdminProducts(token);
   const { data: categoriesData, isLoading: loadingCategories } = useAdminCategories(token);
 

@@ -28,25 +28,25 @@ function isTokenExpired(token: string): boolean {
 export function useAdminAuth() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState("");
   const router = useRouter();
 
-  const getToken = useCallback(() => localStorage.getItem("admin_token"), []);
-
   useEffect(() => {
-    const token = getToken();
-    if (!token || isTokenExpired(token)) {
+    const stored = localStorage.getItem("admin_token") || "";
+    setToken(stored);
+    if (!stored || isTokenExpired(stored)) {
       localStorage.removeItem("admin_token");
       router.push("/admin/login");
       return;
     }
     setAuthenticated(true);
     setLoading(false);
-  }, [router, getToken]);
+  }, [router]);
 
   const logout = useCallback(() => {
     localStorage.removeItem("admin_token");
     router.push("/admin/login");
   }, [router]);
 
-  return { authenticated, loading, token: getToken(), logout };
+  return { authenticated, loading, token, logout };
 }

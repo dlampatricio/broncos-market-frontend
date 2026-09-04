@@ -12,11 +12,12 @@ import { ProductType } from "@/types/product";
 import OptimizedImage from "@/components/optimized-image";
 import { toast } from "sonner";
 import ConfirmDialog from "@/components/admin/confirm-dialog";
+import { useAdminToken } from "@/hooks/use-admin-token";
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
 export default function AdminCategoriesPage() {
-  const token = localStorage.getItem("admin_token") || "";
+  const token = useAdminToken();
   const { data, isLoading, refetch } = useAdminCategories(token);
   const { data: productsData } = useAdminProducts(token);
   const [search, setSearch] = useState("");

@@ -13,11 +13,12 @@ import { formatPrice } from "@/lib/format-price";
 import OptimizedImage from "@/components/optimized-image";
 import { toast } from "sonner";
 import ConfirmDialog from "@/components/admin/confirm-dialog";
+import { useAdminToken } from "@/hooks/use-admin-token";
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
 export default function AdminProductsPage() {
-  const token = localStorage.getItem("admin_token") || "";
+  const token = useAdminToken();
   const { data, isLoading, refetch } = useAdminProducts(token);
   const [search, setSearch] = useState("");
   const [deletingProduct, setDeletingProduct] = useState<ProductType | null>(null);
