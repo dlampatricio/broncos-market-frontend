@@ -16,7 +16,7 @@ const NavBar = () => {
   const cartCount = cart.items.length;
 
   return (
-    <div className="flex items-center justify-between p-4 mx-auto max-w-7xl">
+    <div className="top-0 z-50 flex items-center justify-between p-4 mx-auto max-w-7xl bg-background/80 border-b border-border/50">
       {/* Logo */}
       <span
         className="text-2xl cursor-pointer text-red-900 dark:text-red-500"
