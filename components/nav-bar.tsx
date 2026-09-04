@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { BaggageClaim, Heart, Search, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -10,87 +10,101 @@ import { useLovedProducts } from "@/hooks/use-loved-products";
 
 const NavBar = () => {
   const router = useRouter();
-  const cart = useCart()
-  const { lovedItems } = useLovedProducts()
+  const cart = useCart();
+  const { lovedItems } = useLovedProducts();
+
+  const cartCount = cart.items.length;
 
   return (
-    <div className="flex items-center justify-between p-4 mx-auto max-w-screen-xl border-b">
+    <div className="flex items-center justify-between p-4 mx-auto max-w-7xl">
       {/* Logo */}
-      <h1 
+      <span
         className="text-2xl cursor-pointer text-red-900 dark:text-red-500"
         onClick={() => router.push("/")}
+        role="link"
+        tabIndex={0}
+        onKeyDown={(e) => e.key === "Enter" && router.push("/")}
+        aria-label="Bronco's Market - Ir al inicio"
       >
         <span className="font-bold">Bronco&apos;s</span>
         <span className="ml-2">Market</span>
-      </h1>
+      </span>
 
-      {/* Menú para desktop (oculto en mobile) */}
+      {/* Desktop menu */}
       <div className="items-center justify-between hidden sm:flex">
-        <MenuList/>
+        <MenuList />
       </div>
 
-      {/* Iconos de navegación */}
-      <div className="flex items-center gap-4">
-        {/* Contenido para desktop (oculto en mobile) */}
-        <div className="items-center hidden sm:flex gap-5">
-          <Search 
-            strokeWidth="1.5" 
-            className="w-5 h-5 cursor-pointer text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 transition-colors" 
+      {/* Navigation icons */}
+      <div className="flex items-center gap-2">
+        {/* Desktop icons */}
+        <div className="items-center hidden sm:flex gap-1">
+          <button
             onClick={() => router.push("/all-products")}
-          />
-          {cart.items.length === 0 ? (
-            <ShoppingCart 
-              strokeWidth="1.5" 
-              className="w-5 h-5 cursor-pointer text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 transition-colors" 
-              onClick={() => router.push("/cart")}
-            />
-          ) : (
-            <div 
-              className="flex items-center gap-1 cursor-pointer" 
-              onClick={() => router.push("/cart")}
-            >
-              <BaggageClaim 
-                strokeWidth="1.5" 
-                className="w-5 h-5 text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 transition-colors" 
-              />
-              <span className="text-sm text-red-900 dark:text-red-500">{cart.items.length}</span>
-            </div>
-          )}
-          <Heart 
-            strokeWidth="1.5" 
-            className={`w-5 h-5 cursor-pointer text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 transition-colors ${lovedItems.length > 0 && 'fill-current'}`} 
+            className="p-2.5 rounded-md hover:bg-red-50 dark:hover:bg-card/50 transition-colors text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400"
+            aria-label="Buscar productos"
+          >
+            <Search strokeWidth="1.5" className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => router.push("/cart")}
+            className="p-2.5 rounded-md hover:bg-red-50 dark:hover:bg-card/50 transition-colors text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 relative"
+            aria-label={`Carrito de compras${cartCount > 0 ? ` - ${cartCount} artículos` : ""}`}
+          >
+            {cartCount === 0 ? (
+              <ShoppingCart strokeWidth="1.5" className="w-5 h-5" />
+            ) : (
+              <BaggageClaim strokeWidth="1.5" className="w-5 h-5" />
+            )}
+            {cartCount > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 w-5 h-5 flex items-center justify-center rounded-full bg-red-900 dark:bg-red-500 text-white text-xs font-bold">
+                {cartCount}
+              </span>
+            )}
+          </button>
+          <button
             onClick={() => router.push("/loved-products")}
-          />
+            className="p-2.5 rounded-md hover:bg-red-50 dark:hover:bg-card/50 transition-colors text-red-900 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400"
+            aria-label={`Favoritos${lovedItems.length > 0 ? ` - ${lovedItems.length} productos` : ""}`}
+          >
+            <Heart
+              strokeWidth="1.5"
+              className={`w-5 h-5 ${lovedItems.length > 0 ? "fill-current" : ""}`}
+            />
+          </button>
           <ToggleTheme />
         </div>
 
-        {/* Contenido para mobile */}
-        <div className="flex items-center sm:hidden gap-4">
-          <Search 
-            strokeWidth="1.5" 
-            className="w-5 h-5 cursor-pointer text-red-900 dark:text-red-500" 
+        {/* Mobile icons */}
+        <div className="flex items-center sm:hidden gap-1">
+          <button
             onClick={() => router.push("/all-products")}
-          />
-          {cart.items.length === 0 ? (
-            <ShoppingCart 
-              strokeWidth="1.5" 
-              className="w-5 h-5 text-red-900 dark:text-red-500" 
-              onClick={() => router.push("/cart")}
-            />
-          ) : (
-            <div 
-              className="flex items-center gap-1" 
-              onClick={() => router.push("/cart")}
-            >
-              <BaggageClaim strokeWidth={1.5} className="w-5 h-5 text-red-900 dark:text-red-500" />
-              <span className="text-sm text-red-900 dark:text-red-500">{cart.items.length}</span>
-            </div>
-          )}
+            className="p-2.5 rounded-md text-red-900 dark:text-red-500"
+            aria-label="Buscar productos"
+          >
+            <Search strokeWidth="1.5" className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => router.push("/cart")}
+            className="p-2.5 rounded-md text-red-900 dark:text-red-500 relative"
+            aria-label={`Carrito${cartCount > 0 ? ` - ${cartCount}` : ""}`}
+          >
+            {cartCount === 0 ? (
+              <ShoppingCart strokeWidth="1.5" className="w-5 h-5" />
+            ) : (
+              <BaggageClaim strokeWidth="1.5" className="w-5 h-5" />
+            )}
+            {cartCount > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 w-5 h-5 flex items-center justify-center rounded-full bg-red-900 dark:bg-red-500 text-white text-xs font-bold">
+                {cartCount}
+              </span>
+            )}
+          </button>
           <ItemsMenuMobile />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default NavBar;

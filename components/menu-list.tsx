@@ -10,8 +10,13 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
+import { useCategories } from "@/lib/api"
+import type { CategoryType } from "@/types/category"
 
 const MenuList = () => {
+  const { data } = useCategories();
+  const categories = data?.data || [];
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -21,15 +26,18 @@ const MenuList = () => {
           </NavigationMenuTrigger>
           <NavigationMenuContent className="z-50 bg-white dark:bg-card border rounded-md shadow-lg">
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {components.map((component) => (
+              {categories.map((category: CategoryType) => (
                 <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
+                  key={category.id}
+                  title={category.categoryName}
+                  href={`/category/${category.slug}`}
                 >
-                  {component.description}
+                  Explorar productos de {category.categoryName.toLowerCase()}
                 </ListItem>
               ))}
+              <ListItem title="Todos los productos" href="/all-products">
+                Ver el catálogo completo
+              </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -39,39 +47,6 @@ const MenuList = () => {
 }
 
 export default MenuList;
-
-const components = [
-  {
-    title: "Combos",
-    href: "/category/combos",
-    description: "Paquetes completos y económicos para todas tus necesidades.",
-  },
-  {
-    title: "Lácteos",
-    href: "/category/lacteos",
-    description: "Quesos, leche, mantequilla y más. Nutrición y sabor en cada opción.",
-  },
-  {
-    title: "Cárnicos",
-    href: "/category/carnicos",
-    description: "Cortes selectos de carne de cerdo, pollo, res y embutidos.",
-  },
-  {
-    title: "Bebidas",
-    href: "/category/bebidas",
-    description: "Refrescos, jugos, café y otras bebidas para hidratarte.",
-  },
-  {
-    title: "Confituras",
-    href: "/category/confituras",
-    description: "Dulces, azúcar y productos para endulzar tu día.",
-  },
-  {
-    title: "Otros",
-    href: "/category/otros",
-    description: "Aceites, pastas, condimentos y artículos variados.",
-  },
-]
 
 function ListItem({
   title,

@@ -1,67 +1,48 @@
-'use client'
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { useCart } from "@/hooks/use-cart"
-import { formatPrice } from "@/lib/format-price"
-import CartItem from "./components/cart-item"
-import { TownsCombobox } from "@/app/(routes)/cart/components/towns-combobox"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { useCart } from "@/hooks/use-cart";
+import { formatPrice } from "@/lib/format-price";
+import CartItem from "./components/cart-item";
+import { TownsCombobox } from "@/app/(routes)/cart/components/towns-combobox";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { DELIVERY_PRICES, WHATSAPP_PHONE } from "@/lib/config";
+import { ShoppingCart } from "lucide-react";
+import Link from "next/link";
 
-export default function Page() {
-  const { items, removeAll } = useCart()
-  const [selectedTown, setSelectedTown] = useState<string>("")
-  const [address, setAddress] = useState<string>("")
-  const [name, setName] = useState<string>("")
-  const [phone, setPhone] = useState<string>("")
-  const router = useRouter()
-  
-  const [quantities, setQuantities] = useState<Record<string, number>>(
-    items.reduce((acc, item) => ({ ...acc, [item.id]: 1 }), {}
-  ))
+export default function CartPage() {
+  const { items, removeAll, updateQuantity } = useCart();
+  const [selectedTown, setSelectedTown] = useState("");
+  const [address, setAddress] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const router = useRouter();
 
-  const totalPrice = items.reduce((total, product) => {
-    return total + (product.price * (quantities[product.id] || 1))
-  }, 0) 
-  
-  const deliveryPrices: Record<string, number> = {
-    "cienfuegos": 0,
-    "palmira": 5,
-    "rodas": 10,
-    "abreus": 10,
-    "aguada-de-pasajeros": 18,
-    "cruces": 10,
-    "lajas": 14,
-    "cumanayagua": 10
-  }
-  
-  const delivery = selectedTown ? deliveryPrices[selectedTown] || 0 : 0;
+  const totalPrice = items.reduce(
+    (total, product) => total + product.price * product.quantity,
+    0
+  );
 
-  const handleQuantityChange = (productId: string, newQuantity: number) => {
-    if (newQuantity >= 1) {
-      setQuantities(prev => ({
-        ...prev,
-        [productId]: newQuantity
-      }))
-    }
-  }
+  const delivery = selectedTown ? DELIVERY_PRICES[selectedTown] || 0 : 0;
 
   const handleBuyClick = () => {
-    const productsList = items.map(item => {
-      const quantity = quantities[item.id] || 1
-      return `- ${item.productName} (${formatPrice(item.price)} x ${quantity} = ${formatPrice(item.price * quantity)})`
-    }).join('%0A')
-    
-    const message = `Nuevo pedido:%0A%0ANombre: ${name}%0ATeléfono: ${phone}%0A%0AProductos:%0A${productsList}%0A%0AMunicipio de entrega: ${selectedTown}%0ADirección: ${address}%0APrecio Productos: ${formatPrice(totalPrice)}%0APrecio Envío: ${formatPrice(delivery)}%0ATotal a Pagar: ${formatPrice(totalPrice + delivery)}`
-    
-    window.open(`https://wa.me/5358527122?text=${message}`, '_blank')
-    router.push('/success')
-    removeAll()
-  }
+    const productsList = items
+      .map((item) => {
+        return `- ${item.productName} (${formatPrice(item.price)} x ${item.quantity} = ${formatPrice(item.price * item.quantity)})`;
+      })
+      .join("%0A");
 
-  const totalItems = Object.values(quantities).reduce((total, qty) => total + qty, 0)
+    const message = `Nuevo pedido:%0A%0ANombre: ${name}%0ATeléfono: ${phone}%0A%0AProductos:%0A${productsList}%0A%0AMunicipio de entrega: ${selectedTown}%0ADirección: ${address}%0APrecio Productos: ${formatPrice(totalPrice)}%0APrecio Envío: ${formatPrice(delivery)}%0ATotal a Pagar: ${formatPrice(totalPrice + delivery)}`;
+
+    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${message}`, "_blank");
+    router.push("/success");
+    removeAll();
+  };
+
+  const totalItems = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
@@ -72,112 +53,102 @@ export default function Page() {
       </section>
 
       <div className="grid md:grid-cols-2 gap-8">
-        {/* Lista de productos */}
         <div className="space-y-6">
           {items.length === 0 ? (
-            <div className="p-6 text-center bg-gray-100 rounded-lg border border-red-100 dark:bg-card">
-              <p className="text-gray-600 dark:text-gray-300">No hay productos en el carrito</p>
+            <div className="p-8 text-center bg-muted/50 rounded-lg border border-border flex flex-col items-center gap-4">
+              <ShoppingCart className="h-12 w-12 text-muted-foreground" strokeWidth={1.5} />
+              <p className="text-muted-foreground">No hay productos en el carrito</p>
+              <Link href="/all-products">
+                <Button variant="outline">Explorar productos</Button>
+              </Link>
             </div>
           ) : (
             <ul className="space-y-4">
               {items.map((item) => (
-                <CartItem 
-                  key={item.id} 
+                <CartItem
+                  key={item.id}
                   product={item}
-                  quantity={quantities[item.id] || 1}
-                  onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
+                  onQuantityChange={(qty) => updateQuantity(item.id, qty)}
                 />
               ))}
             </ul>
           )}
         </div>
-        
-        {/* Resumen de compra */}
+
         <div>
-          <div className="p-6 space-y-6 bg-gray-100 rounded-lg border dark:bg-card">
-            <h2 className="text-xl font-semibold text-red-900 dark:text-red-500 text-center">Resumen del pedido</h2>
+          <div className="p-6 space-y-6 bg-muted/30 rounded-lg border border-border">
+            <h2 className="text-xl font-semibold text-red-900 dark:text-red-500 text-center">
+              Resumen del pedido
+            </h2>
             <Separator className="bg-red-900 dark:bg-red-500" />
-            
+
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-300">
-                  Subtotal ({totalItems} {totalItems === 1 ? 'artículo' : 'artículos'})
+                <span className="text-muted-foreground">
+                  Subtotal ({totalItems} {totalItems === 1 ? "artículo" : "artículos"})
                 </span>
-                <span className="font-medium text-gray-900 dark:text-white">
-                  {formatPrice(totalPrice)}
-                </span>
+                <span className="font-medium">{formatPrice(totalPrice)}</span>
               </div>
-              
+
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-300">Envío</span>
-                <span className={`font-medium ${selectedTown ? 'text-gray-900 dark:text-white' : 'text-orange-500'}`}>
+                <span className="text-muted-foreground">Envío</span>
+                <span className={`font-medium ${selectedTown ? "" : "text-orange-500"}`}>
                   {selectedTown ? formatPrice(delivery) : "Seleccione municipio"}
                 </span>
               </div>
-              
+
               <Separator className="bg-red-900 dark:bg-red-500" />
-              
+
               <div className="flex justify-between text-lg">
-                <span className="font-semibold text-gray-900 dark:text-white">Total</span>
-                <span className="font-bold text-gray-900 dark:text-white">
+                <span className="font-semibold">Total</span>
+                <span className="font-bold">
                   {selectedTown ? formatPrice(totalPrice + delivery) : "---"}
                 </span>
               </div>
             </div>
 
             <div className="space-y-4 pt-2">
-              <div className="space-y-3">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Nombre completo
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Nombre completo</label>
                 <Input
                   placeholder="Tu nombre"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full border-gray-300 focus:border-red-900 dark:focus:border-red-500"
+                  className="border-border focus:border-red-900 dark:focus:border-red-500"
                   required
                 />
               </div>
 
-              <div className="space-y-3">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Número de teléfono
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Número de teléfono</label>
                 <Input
                   placeholder="Tu teléfono"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full border-gray-300 focus:border-red-900 dark:focus:border-red-500"
+                  className="border-border focus:border-red-900 dark:focus:border-red-500"
                   required
                   type="tel"
                 />
               </div>
 
-              <div className="space-y-3">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Municipio de entrega
-                </label>
-                <TownsCombobox 
-                  selectedTown={selectedTown}
-                  onTownSelect={setSelectedTown}
-                />
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Municipio de entrega</label>
+                <TownsCombobox selectedTown={selectedTown} onTownSelect={setSelectedTown} />
               </div>
 
-              <div className="space-y-3">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Dirección exacta
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Dirección exacta</label>
                 <Input
                   placeholder="Calle, número, entre calles..."
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  className="w-full border-gray-300 focus:border-red-900 dark:focus:border-red-500"
+                  className="border-border focus:border-red-900 dark:focus:border-red-500"
                   required
                 />
               </div>
             </div>
 
-            <Button 
+            <Button
               className="w-full py-6 text-base font-medium bg-red-900 hover:bg-red-800 text-white shadow-md transition"
               onClick={handleBuyClick}
               disabled={items.length === 0 || !selectedTown || !address || !name || !phone}
@@ -188,5 +159,5 @@ export default function Page() {
         </div>
       </div>
     </div>
-  )
+  );
 }

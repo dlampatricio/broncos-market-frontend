@@ -1,343 +1,181 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Menu, ShoppingCart, Heart, Sun, Moon, Home, Info, BaggageClaim } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  IconButton,
-  Box,
-  Divider,
-  Typography,
-  Switch,
-} from "@mui/material"
-import { useTheme } from "next-themes"
-import { useCart } from "@/hooks/use-cart"
-import { useLovedProducts } from "@/hooks/use-loved-products"
+import { useEffect, useState } from "react";
+import { Menu, ShoppingCart, Heart, Sun, Moon, Home, Info, BaggageClaim, X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+import { useCart } from "@/hooks/use-cart";
+import { useLovedProducts } from "@/hooks/use-loved-products";
+import { STRAPI_CATEGORIES } from "@/lib/config";
 
 const ItemsMenuMobile = () => {
-  const [open, setOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const router = useRouter()
-  const { systemTheme, theme, setTheme } = useTheme()
-  const currentTheme = theme === "system" ? systemTheme : theme
-  const cart = useCart()
-  const { lovedItems } = useLovedProducts()
+  const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+  const { systemTheme, theme, setTheme } = useTheme();
+  const currentTheme = theme === "system" ? systemTheme : theme;
+  const cart = useCart();
+  const { lovedItems } = useLovedProducts();
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  useEffect(() => setMounted(true), []);
 
-  const toggleDrawer = (isOpen: boolean) => () => {
-    setOpen(isOpen)
-  }
+  const toggleDrawer = (isOpen: boolean) => () => setOpen(isOpen);
 
   if (!mounted) {
     return (
-      <IconButton 
-        sx={{
-          color: "#dc2626",
-          "&:hover": {
-            backgroundColor: "transparent",
-            opacity: 0.8
-          }
-        }}
-      >
-        <Menu className="w-6 h-6 text-red-900" />
-      </IconButton>
-    )
+      <button className="p-1 text-red-900 dark:text-red-500">
+        <Menu className="w-6 h-6" />
+      </button>
+    );
   }
 
+  const iconColor = "text-red-900 dark:text-red-500";
+
   return (
-    <Box>
-      <IconButton 
-        onClick={toggleDrawer(true)}
-        sx={{
-          color: currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626",
-          "&:hover": {
-            backgroundColor: "transparent",
-            opacity: 0.8
-          }
-        }}
-      >
-        <Menu className="w-6 h-6 text-red-900 dark:text-red-500" />
-      </IconButton>
+    <>
+      <button onClick={toggleDrawer(true)} className="p-1 text-red-900 dark:text-red-500">
+        <Menu className="w-6 h-6" />
+      </button>
 
-      <Drawer
-        anchor="right"
-        open={open}
-        onClose={toggleDrawer(false)}
-        transitionDuration={300}
-        PaperProps={{
-          sx: { 
-            width: "300px",
-            backgroundColor: currentTheme === "dark" ? "rgb(23 23 23)" : "#ffffff",
-            borderLeft: currentTheme === "dark" ? "1px solid rgb(34 35 35)" : "1px solid #e5e7eb"
-          }
-        }}
-      >
-        {/* Encabezado */}
-        <Box sx={{ 
-          p: 3, 
-          textAlign: "center",
-          borderBottom: currentTheme === "dark" ? "1px solid rgb(34 35 35)" : "1px solid #e5e7eb"
-        }}>
-          <Typography 
-            variant="h6" 
-            component="div"
-            sx={{
-              fontWeight: 700,
-              color: currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626",
-              letterSpacing: "0.5px"
-            }}
-          >
-            BRONCO&apos;S MARKET
-          </Typography>
-          <Typography 
-            variant="caption" 
-            component="div"
-            sx={{
-              color: currentTheme === "dark" ? "#9ca3af" : "#6b7280",
-              mt: 0.5
-            }}
-          >
-            Lo esencial llega a tu puerta
-          </Typography>
-        </Box>
+      {/* Overlay */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 transition-opacity"
+          onClick={toggleDrawer(false)}
+        />
+      )}
 
-        {/* Menú principal */}
-        <List sx={{ py: 0 }}>
-          <ListItem
-            component={Link}
+      {/* Drawer */}
+      <div
+        className={`fixed top-0 right-0 h-full w-[300px] bg-white dark:bg-card border-l border-border z-50 transform transition-transform duration-300 ${
+          open ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Header */}
+        <div className="p-6 text-center border-b border-border">
+          <div className="flex items-center justify-between mb-1">
+            <span />
+            <h2 className="text-lg font-bold text-red-900 dark:text-red-500">
+              BRONCO&apos;S MARKET
+            </h2>
+            <button onClick={toggleDrawer(false)} className="text-muted-foreground hover:text-foreground">
+              <X size={20} />
+            </button>
+          </div>
+          <p className="text-sm text-muted-foreground">Lo esencial llega a tu puerta</p>
+        </div>
+
+        {/* Navigation */}
+        <nav className="py-2">
+          <Link
             href="/"
             onClick={toggleDrawer(false)}
-            sx={{ 
-              "&:hover": { 
-                backgroundColor: currentTheme === "dark" ? "rgba(239, 68, 68, 0.1)" : "rgba(220, 38, 38, 0.05)" 
-              },
-              borderBottom: currentTheme === "dark" ? "1px solid rgb(34 35 35)" : "1px solid #e5e7eb"
-            }}
+            className="flex items-center gap-3 px-6 py-3 hover:bg-red-50 dark:hover:bg-accent transition-colors"
           >
-            <ListItemIcon sx={{ minWidth: "36px" }}>
-              <Home size={20} color={currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626"} />
-            </ListItemIcon>
-            <ListItemText 
-              primary="Inicio" 
-              primaryTypographyProps={{ 
-                fontWeight: 500,
-                color: currentTheme === "dark" ? "#f3f4f6" : "#111827"
-              }} 
-            />
-          </ListItem>
+            <Home size={20} className={iconColor} />
+            <span className="font-medium">Inicio</span>
+          </Link>
 
-          {/* Categorías */}
-          <Typography 
-            variant="subtitle2" 
-            sx={{ 
-              px: 2, 
-              pt: 2, 
-              pb: 1,
-              color: currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626",
-              fontWeight: 600
-            }}
-          >
+          <div className="px-6 pt-4 pb-1 text-xs font-semibold text-red-900 dark:text-red-500 tracking-wider">
             CATEGORÍAS
-          </Typography>
-          
-          {[
-            { href: "/category/combos", text: "Combos" },
-            { href: "/category/lacteos", text: "Lácteos" },
-            { href: "/category/carnicos", text: "Cárnicos" },
-            { href: "/category/bebidas", text: "Bebidas" },
-            { href: "/category/confituras", text: "Confituras" },
-            { href: "/category/otros", text: "Otros" },
-            { href: "/all-products", text: "Todos los Productos" },
-          ].map((item) => (
-            <ListItem
+          </div>
+
+          {STRAPI_CATEGORIES.map((item) => (
+            <Link
               key={item.href}
-              component={Link}
               href={item.href}
               onClick={toggleDrawer(false)}
-              sx={{ 
-                "&:hover": { 
-                  backgroundColor: currentTheme === "dark" ? "rgba(239, 68, 68, 0.1)" : "rgba(220, 38, 38, 0.05)" 
-                },
-                py: 1.5
-              }}
+              className="block px-6 py-2.5 hover:bg-red-50 dark:hover:bg-accent transition-colors"
             >
-              <ListItemText 
-                primary={item.text} 
-                primaryTypographyProps={{ 
-                  fontWeight: 500,
-                  color: currentTheme === "dark" ? "#e5e7eb" : "#374151"
-                }} 
-              />
-            </ListItem>
+              <span className="font-medium text-sm">{item.text}</span>
+            </Link>
           ))}
-        </List>
 
-        <Divider sx={{ 
-          my: 1,
-          borderColor: currentTheme === "dark" ? "rgb(34 35 35)" : "#e5e7eb" 
-        }} />
-
-        {/* Acciones del usuario */}
-        <List>
-          {/* Carrito */}
-          <ListItem
-            onClick={() => {
-              router.push("/cart")
-              toggleDrawer(false)()
-            }}
-            sx={{ 
-              "&:hover": { 
-                backgroundColor: currentTheme === "dark" ? "rgba(239, 68, 68, 0.1)" : "rgba(220, 38, 38, 0.05)" 
-              },
-              py: 1.5,
-              position: "relative"
-            }}
+          <Link
+            href="/all-products"
+            onClick={toggleDrawer(false)}
+            className="block px-6 py-2.5 hover:bg-red-50 dark:hover:bg-accent transition-colors"
           >
-            <ListItemIcon sx={{ minWidth: "36px" }}>
-              {cart.items.length > 0 ? (
-                <BaggageClaim size={20} color={currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626"} />
-              ) : (
-                <ShoppingCart size={20} color={currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626"} />
-              )}
-            </ListItemIcon>
-            <ListItemText 
-              primary="Carrito" 
-              primaryTypographyProps={{ 
-                fontWeight: 500,
-                color: currentTheme === "dark" ? "#f3f4f6" : "#111827"
-              }} 
-            />
-            {cart.items.length > 0 && (
-              <Box sx={{
-                position: "absolute",
-                right: 16,
-                backgroundColor: currentTheme === "dark" ? "#ef4444" : "#dc2626",
-                color: "white",
-                borderRadius: "50%",
-                width: 22,
-                height: 22,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "0.75rem"
-              }}>
-                {cart.items.length}
-              </Box>
+            <span className="font-medium text-sm">Todos los Productos</span>
+          </Link>
+        </nav>
+
+        <div className="mx-4 border-t border-border" />
+
+        {/* Actions */}
+        <nav className="py-2">
+          <button
+            onClick={() => { router.push("/cart"); setOpen(false); }}
+            className="w-full flex items-center gap-3 px-6 py-3 hover:bg-red-50 dark:hover:bg-accent transition-colors relative"
+          >
+            {cart.items.length > 0 ? (
+              <BaggageClaim size={20} className={iconColor} />
+            ) : (
+              <ShoppingCart size={20} className={iconColor} />
             )}
-          </ListItem>
+            <span className="font-medium">Carrito</span>
+            {cart.items.length > 0 && (
+              <span className="absolute right-6 w-5 h-5 flex items-center justify-center rounded-full bg-red-900 dark:bg-red-500 text-white text-xs font-bold">
+                {cart.items.length}
+              </span>
+            )}
+          </button>
 
-          {/* Favoritos */}
-          <ListItem
-            onClick={() => {
-              router.push("/loved-products")
-              toggleDrawer(false)()
-            }}
-            sx={{ 
-              "&:hover": { 
-                backgroundColor: currentTheme === "dark" ? "rgba(239, 68, 68, 0.1)" : "rgba(220, 38, 38, 0.05)" 
-              },
-              py: 1.5
-            }}
+          <button
+            onClick={() => { router.push("/loved-products"); setOpen(false); }}
+            className="w-full flex items-center gap-3 px-6 py-3 hover:bg-red-50 dark:hover:bg-accent transition-colors"
           >
-            <ListItemIcon sx={{ minWidth: "36px" }}>
-              <Heart 
-                size={20} 
-                color={currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626"} 
-                fill={lovedItems.length > 0 ? (currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626") : "none"}
-              />
-            </ListItemIcon>
-            <ListItemText 
-              primary="Favoritos" 
-              primaryTypographyProps={{ 
-                fontWeight: 500,
-                color: currentTheme === "dark" ? "#f3f4f6" : "#111827"
-              }} 
+            <Heart
+              size={20}
+              className={iconColor}
+              fill={lovedItems.length > 0 ? "currentColor" : "none"}
             />
-          </ListItem>
+            <span className="font-medium">Favoritos</span>
+          </button>
 
-          {/* Toggle de tema */}
-          <ListItem 
-            sx={{ 
-              display: "flex", 
-              justifyContent: "space-between", 
-              alignItems: "center",
-              py: 1.5
-            }}
+          <button
+            onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
+            className="w-full flex items-center justify-between px-6 py-3 hover:bg-red-50 dark:hover:bg-accent transition-colors"
           >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <ListItemIcon sx={{ minWidth: "36px" }}>
-                {currentTheme === "dark" ? (
-                  <Moon size={20} color="rgb(251 44 54)" />
-                ) : (
-                  <Sun size={20} color="#dc2626" />
-                )}
-              </ListItemIcon>
-              <ListItemText 
-                primary={currentTheme === "dark" ? "Modo oscuro" : "Modo claro"} 
-                primaryTypographyProps={{ 
-                  fontWeight: 500,
-                  color: currentTheme === "dark" ? "#f3f4f6" : "#111827"
-                }} 
+            <div className="flex items-center gap-3">
+              {currentTheme === "dark" ? (
+                <Moon size={20} className={iconColor} />
+              ) : (
+                <Sun size={20} className={iconColor} />
+              )}
+              <span className="font-medium">{currentTheme === "dark" ? "Modo oscuro" : "Modo claro"}</span>
+            </div>
+            <div
+              className={`w-10 h-5 rounded-full transition-colors ${
+                currentTheme === "dark" ? "bg-red-500" : "bg-red-900"
+              }`}
+            >
+              <div
+                className={`w-4 h-4 bg-white rounded-full transform transition-transform mt-0.5 ${
+                  currentTheme === "dark" ? "translate-x-5" : "translate-x-0.5"
+                }`}
               />
-            </Box>
-            <Switch
-              checked={currentTheme === "dark"}
-              onChange={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-              color="default"
-              sx={{
-                '& .MuiSwitch-switchBase': {
-                  color: currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626",
-                },
-                '& .MuiSwitch-track': {
-                  backgroundColor: currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626",
-                },
-              }}
-            />
-          </ListItem>
-        </List>
+            </div>
+          </button>
+        </nav>
 
-        <Divider sx={{ 
-          my: 1,
-          borderColor: currentTheme === "dark" ? "rgb(34 35 35)" : "#e5e7eb" 
-        }} />
+        <div className="mx-4 border-t border-border" />
 
-        {/* Información */}
-        <List>
-          <ListItem
-            component={Link}
+        {/* Info */}
+        <nav className="py-2">
+          <Link
             href="/about-us"
             onClick={toggleDrawer(false)}
-            sx={{ 
-              "&:hover": { 
-                backgroundColor: currentTheme === "dark" ? "rgba(239, 68, 68, 0.1)" : "rgba(220, 38, 38, 0.05)" 
-              },
-              py: 1.5
-            }}
+            className="flex items-center gap-3 px-6 py-3 hover:bg-red-50 dark:hover:bg-accent transition-colors"
           >
-            <ListItemIcon sx={{ minWidth: "36px" }}>
-              <Info size={20} color={currentTheme === "dark" ? "rgb(251 44 54)" : "#dc2626"} />
-            </ListItemIcon>
-            <ListItemText 
-              primary="Sobre nosotros" 
-              primaryTypographyProps={{ 
-                fontWeight: 500,
-                color: currentTheme === "dark" ? "#f3f4f6" : "#111827"
-              }} 
-            />
-          </ListItem>
-        </List>
-      </Drawer>
-    </Box>
-  )
-}
+            <Info size={20} className={iconColor} />
+            <span className="font-medium">Sobre nosotros</span>
+          </Link>
+        </nav>
+      </div>
+    </>
+  );
+};
 
-export default ItemsMenuMobile
+export default ItemsMenuMobile;
