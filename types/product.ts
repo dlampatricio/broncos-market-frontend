@@ -1,27 +1,31 @@
+export type ProductImage = {
+  id: number;
+  url: string;
+  formats?: {
+    small?: { url: string };
+    medium?: { url: string };
+    large?: { url: string };
+  };
+};
+
+export type ProductCategory = {
+  id: string;
+  slug: string;
+  categoryName: string;
+};
+
 export type ProductType = {
   id: string;
+  documentId: string;
   productName: string;
   description: string;
   slug: string;
   active: boolean;
   isFeatured: boolean;
   price: number;
-  images: {
-    id: number;
-    formats: {
-      medium: {
-        url: string;
-      }
-      small: {
-        url: string;
-      }
-    }
-  }[];
-  category: {
-      slug: string;
-      categoryName: string;
-  };
-  weight: string;
-  familySize: string;
   min: number;
-}
+  images: ProductImage[];
+  category: ProductCategory;
+  createdAt: string;
+  updatedAt: string;
+};
