@@ -12,13 +12,14 @@ import {
 } from "./ui/carousel";
 import SkeletonSchema from "./skeleton-schema";
 import { ProductType } from "@/types/product";
-import { Expand, ShoppingCart, PackageOpen } from "lucide-react";
+import { Expand, ShoppingCart, PackageOpen, Pause, Play } from "lucide-react";
 import IconButton from "./icon-button";
 import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/format-price";
 import { useCart } from "@/hooks/use-cart";
 import OptimizedImage from "./optimized-image";
 import { cn } from "@/lib/utils";
+import Autoplay from "embla-carousel-autoplay";
 
 const FeaturedProducts = () => {
   const { data, isLoading, isError } = useFeaturedProducts();
@@ -26,6 +27,15 @@ const FeaturedProducts = () => {
   const { addItem } = useCart();
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const [autoplay] = useState(() =>
+    Autoplay({
+      delay: 4000,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+    })
+  );
 
   const sortedProducts = useMemo(() => {
     if (!data?.data) return [];
@@ -41,15 +51,42 @@ const FeaturedProducts = () => {
     });
   }, []);
 
+  const toggleAutoplay = useCallback(() => {
+    if (isPlaying) {
+      autoplay.stop();
+    } else {
+      autoplay.play();
+    }
+    setIsPlaying(!isPlaying);
+  }, [isPlaying, autoplay]);
+
   return (
     <div className="max-w-6xl py-4 mx-auto sm:py-16 px-4 sm:px-24">
-      <h3 className="text-red-900 dark:text-red-500 text-3xl font-bold mb-8 text-center">
-        Productos Destacados
-      </h3>
+      <div className="flex items-center justify-center gap-3 mb-8">
+        <h3 className="text-red-900 dark:text-red-500 text-3xl font-bold text-center">
+          Productos Destacados
+        </h3>
+        {!isLoading && sortedProducts.length > 1 && (
+          <button
+            onClick={toggleAutoplay}
+            className={cn(
+              "flex items-center justify-center w-8 h-8 rounded-full border transition-colors",
+              "border-red-900/30 dark:border-red-500/30",
+              isPlaying
+                ? "text-red-900 dark:text-red-500 hover:bg-red-900/10 dark:hover:bg-red-500/10"
+                : "text-muted-foreground hover:bg-muted"
+            )}
+            aria-label={isPlaying ? "Pausar carrusel" : "Reproducir carrusel"}
+          >
+            {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+          </button>
+        )}
+      </div>
 
       <Carousel
         opts={{ align: "center", loop: true }}
         setApi={onSetApi}
+        plugins={[autoplay]}
       >
         <CarouselContent className="-ml-2">
           {isLoading
