@@ -22,8 +22,8 @@ const SkeletonSchema = (props: SkeletonSchemaProps) => {
   return ( 
     Array.from({length: grid}).map((_, index) => (
       <div key={index}>
-        <div className="group relative block overflow-hidden rounded-none sm:rounded-lg">
-          <Skeleton className="w-full h-[270px] sm:h-[170px] rounded-none sm:rounded-lg"/>
+        <div className="group relative block overflow-hidden rounded-lg border border-border">
+          <Skeleton className="w-full aspect-square rounded-lg"/>
           <div className="p-4 space-y-2">
             <div className="flex justify-between gap-6">
               <Skeleton className="h-5 w-3/4"/>

@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import OptimizedImage from "@/components/optimized-image";
 import { cn } from "@/lib/utils";
 
 interface ProductImageMiniatureProps {
@@ -9,12 +9,15 @@ interface ProductImageMiniatureProps {
 
 const ProductImageMiniature = ({ slug, url, className }: ProductImageMiniatureProps) => {
   return (
-      <img
+    <div className={cn("relative", className)}>
+      <OptimizedImage
         src={url}
         alt={slug}
-        className={cn("rounded-md", className)}
+        fill
+        sizes="160px"
       />
+    </div>
   );
-}
- 
+};
+
 export default ProductImageMiniature;
